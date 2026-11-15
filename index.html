@@ -1,0 +1,398 @@
+<!DOCTYPE HTML>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Tadeo Pedro Ricasoli</title>
+    <meta name="description" content="Shoots photos, writes code, drinks mate. Repeat. Portfolio de fotografía de Tadeo Pedro Ricasoli: paisajes de Argentina, deportes, autos y más." />
+    <link rel="icon" href="images/tpr_prada_ico.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" />
+    <link rel="preload" as="image" href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844655/01_cxwimd.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/02_urb7ry.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1751401847/03_c7rhkx.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/04_uafpo4.webp" fetchpriority="high" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+      /* Que el aviso de "Message Sent" quede por encima del panel de contacto (z-index 10002/10003) */
+      .swal2-container {
+        z-index: 20000 !important;
+      }
+
+      /* Pop-up con el mismo estilo que la página */
+      .swal2-container.swal2-backdrop-show {
+        background: rgba(36, 38, 41, 0.85) !important;
+      }
+      .swal2-popup {
+        background: #1f2224 !important;
+        border: 2px solid #36383c;
+        border-radius: 0 !important;
+        color: #a0a0a1 !important;
+        font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+        font-weight: 300;
+        letter-spacing: 0.025em;
+        padding: 2.5em 2em 2em 2em !important;
+        width: 26em !important;
+        max-width: calc(100% - 2em);
+      }
+      .swal2-title {
+        color: #ffffff !important;
+        font-size: 1.25em !important;
+        font-weight: 300 !important;
+        letter-spacing: 0.1em !important;
+        text-transform: uppercase;
+        padding: 0.25em 0 0 0 !important;
+      }
+      .swal2-html-container {
+        color: #a0a0a1 !important;
+        font-size: 1em !important;
+        font-weight: 300 !important;
+        line-height: 1.65 !important;
+        margin: 1em 0 0 0 !important;
+      }
+      .swal2-icon {
+        transform: scale(0.75);
+        margin: 0 auto -0.5em auto !important;
+      }
+      .swal2-icon.swal2-success { border-color: #34a58e !important; color: #34a58e !important; }
+      .swal2-icon.swal2-success [class^='swal2-success-line'] { background-color: #34a58e !important; }
+      .swal2-icon.swal2-success .swal2-success-ring { border-color: rgba(52, 165, 142, 0.3) !important; }
+      .swal2-icon.swal2-success [class^='swal2-success-circular-line'],
+      .swal2-icon.swal2-success .swal2-success-fix { background-color: #1f2224 !important; }
+      .swal2-icon.swal2-error { border-color: #ff6b6b !important; }
+      .swal2-icon.swal2-error [class^='swal2-x-mark-line'] { background-color: #ff6b6b !important; }
+      .swal2-actions { margin-top: 1.75em !important; }
+      .swal2-styled.swal2-confirm {
+        background-color: #34a58e !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        color: #ffffff !important;
+        font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+        font-size: 0.9em !important;
+        font-weight: 300 !important;
+        height: 3.05556em;
+        letter-spacing: 0.1em !important;
+        line-height: 3.05556em;
+        padding: 0 2.5em !important;
+        text-transform: uppercase;
+        transition: background-color 0.2s ease-in-out;
+      }
+      .swal2-styled.swal2-confirm:hover { background-color: #47c5ab !important; background-image: none !important; }
+      .swal2-styled.swal2-confirm:active { background-color: #287e6d !important; }
+      .swal2-styled.swal2-confirm:focus { box-shadow: none !important; }
+
+      /* Íconos en SVG (reemplazan a Font Awesome) */
+      .icon .ico { width: auto; height: 1em; fill: currentColor; vertical-align: -0.125em; }
+      ul.icons li .icon .ico { height: 1.5em; vertical-align: middle; }
+      #header nav .ico-nav { fill: #505051; margin-left: 0.75em; }
+
+      .error-message {
+        color: #ff6b6b;
+        font-size: 0.9em;
+        margin-top: 5px;
+      }
+
+      #main:hover .thumb {
+        filter: brightness(0.5);
+        transform: scale(1);
+        z-index: 0;
+        transition: filter 0.3s ease, transform 0.3s ease;
+      }
+
+      #main .thumb:hover {
+        filter: brightness(1);
+        transform: scale(1.05);
+        z-index: 10;
+        box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+      }
+    </style>
+  </head>
+  <body class="is-preload">
+
+
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <h1>
+          <a href="https://tadeoricasoli.com">
+            <strong>© Ricasoli</strong> Tadeo Pedro </a>
+        </h1>
+        <nav>
+          <ul>
+            <li>
+              <a href="#footer" class="icon">Contact<svg class="ico ico-nav" viewBox="0 0 576 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M532 61.7998c15.2998 -30.7002 37.4004 -54.5 37.7998 -54.7998c6.2998 -6.7002 8 -16.5 4.40039 -25c-3.7002 -8.5 -12 -14 -21.2002 -14c-53.5996 0 -96.7002 20.2998 -125.2 38.7998c-19 -4.39941 -39 -6.7998 -59.7998 -6.7998
+c-86.2002 0 -159.9 40.4004 -191.3 97.7998c-9.7002 1.2002 -19.2002 2.7998 -28.4004 4.90039c-28.5 -18.6006 -71.7002 -38.7998 -125.2 -38.7998c-9.19922 0 -17.5996 5.5 -21.1992 14c-3.7002 8.5 -1.90039 18.2998 4.39941 25
+c0.400391 0.399414 22.4004 24.1992 37.7002 54.8994c-27.5 27.2002 -44 61.2002 -44 98.2002c0 88.4004 93.0996 160 208 160c86.2998 0 160.3 -40.5 191.8 -98.0996c99.7002 -11.8008 176.2 -77.9004 176.2 -157.9c0 -37.0996 -16.5 -71.0996 -44 -98.2002zM139.2 154.1
+l19.7998 -4.5c16 -3.69922 32.5 -5.59961 49 -5.59961c86.7002 0 160 51.2998 160 112s-73.2998 112 -160 112s-160 -51.2998 -160 -112c0 -28.7002 16.2002 -50.5996 29.7002 -64l24.7998 -24.5l-15.5 -31.0996c-2.59961 -5.10059 -5.2998 -10.1006 -8 -14.8008
+c14.5996 5.10059 29 12.3008 43.0996 21.4004zM498.3 96c13.5 13.4004 29.7002 35.2998 29.7002 64c0 49.2002 -48.2998 91.5 -112.7 106c0.299805 -3.2998 0.700195 -6.59961 0.700195 -10c0 -80.9004 -78 -147.5 -179.3 -158.3
+c29.0996 -29.6006 77.2998 -49.7002 131.3 -49.7002c16.5 0 33 1.90039 49 5.59961l19.9004 4.60059l17.0996 -11.1006c14.0996 -9.09961 28.5 -16.2998 43.0996 -21.3994c-2.69922 4.7002 -5.39941 9.7002 -8 14.7998l-15.5 31.0996z"/></svg></a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <!-- Main -->
+      <div id="main">
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844655/01_cxwimd.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844655/01_cxwimd.webp" alt="Glaciar Perito Moreno" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>GLACIAR PERITO MORENO</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844653/02_urb7ry.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/02_urb7ry.webp" alt="Sarmiento de Junín" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>SARMIENTO DE JUNÍN</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1751401847/03_c7rhkx.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1751401847/03_c7rhkx.webp" alt="CRYING LIGHTNING" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>CRYING LIGHTNING</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844653/04_uafpo4.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/04_uafpo4.webp" alt="CAÑÓN DEL ATUEL" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>MENDOZA</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844653/05_hsizjh.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/05_hsizjh.webp" alt="107 VISA OPEN" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>116 VISA OPEN</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844656/06_kzskn3.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844656/06_kzskn3.webp" alt="ENTRE RÍOS" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>ENTRE RÍOS</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1761569918/07_aep8d1_o7rp2i.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1761570532/07_aep8d1_kgls9m.webp" alt="PITU" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>PITU</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844654/08_mrndg1.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844654/08_mrndg1.webp" alt="UPSIDE DOWN" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>UPSIDE DOWN</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844656/09_bbaulk.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1761570741/09_bbaulk_csswko.webp" alt="JUJUY" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>YUNGAS</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844655/10_zdujp0.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844655/10_zdujp0.webp" alt="TC" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>TC</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844654/11_hfvzzh.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844654/11_hfvzzh.webp" alt="FIRE BIRDS" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>FIRE BIRDS</h2>
+        </article>
+        <article class="thumb">
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844656/12_zp65w1.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844656/12_zp65w1.webp" alt="B&W" loading="lazy" width="300" height="200" />
+          </a>
+          <h2>RECORDING</h2>
+        </article>
+      </div>
+      </div>
+      <!-- Footer -->
+      <footer id="footer" class="panel">
+        <div class="inner split">
+          <div>
+            <section>
+              <h2>Wanna say something?</h2>
+              <p>Drop me a message and let’s chat! Whether you’ve got a question, an idea, a project in mind, or just feel like saying hi — I’m all ears. I’ll get back to you as soon as I can!</p>
+            </section>
+            <section>
+              <h2>Follow me on ...</h2>
+              <ul class="icons">
+                <li>
+                  <a href="https://x.com/tadeoricasoli" target="_blank" rel="noopener" class="icon" aria-label="X">
+                    <svg class="ico" viewBox="-1 -1 26 26" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span class="label">X</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.facebook.com/tadeoricasoli/" target="_blank" rel="noopener" class="icon" aria-label="Facebook">
+                    <svg class="ico" viewBox="0 0 320 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M279.14 160h-74.6895v-224h-100.17v224h-81.3906v92.6602h81.3906v70.6201c0 80.3398 47.8594 124.72 121.08 124.72c35.0693 0 71.75 -6.25977 71.75 -6.25977v-78.8906h-40.4199c-39.8203 0 -52.2402 -24.71 -52.2402 -50.0596v-60.1299h88.9102z"/></svg><span class="label">Facebook</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/tadeoricasoli/" target="_blank" rel="noopener" class="icon" aria-label="Instagram">
+                    <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M224.1 307c63.6006 0 114.9 -51.2998 114.9 -114.9c0 -63.5996 -51.2998 -114.899 -114.9 -114.899c-63.5996 0 -114.899 51.2998 -114.899 114.899c0 63.6006 51.2998 114.9 114.899 114.9zM224.1 117.4c41.1006 0 74.7002 33.5 74.7002 74.6992
+c0 41.2002 -33.5 74.7002 -74.7002 74.7002c-41.1992 0 -74.6992 -33.5 -74.6992 -74.7002c0 -41.1992 33.5996 -74.6992 74.6992 -74.6992zM370.5 311.7c0 -14.9004 -12 -26.7998 -26.7998 -26.7998c-14.9004 0 -26.7998 12 -26.7998 26.7998s12 26.7998 26.7998 26.7998
+s26.7998 -12 26.7998 -26.7998zM446.6 284.5c2.10059 -37 2.10059 -147.8 0 -184.8c-1.7998 -35.9004 -10 -67.7002 -36.1992 -93.9004c-26.2002 -26.2998 -58 -34.5 -93.9004 -36.2002c-37 -2.09961 -147.9 -2.09961 -184.9 0
+c-35.8994 1.80078 -67.5996 10 -93.8994 36.2002s-34.5 58 -36.2002 93.9004c-2.09961 37 -2.09961 147.899 0 184.899c1.7998 35.9004 9.90039 67.7002 36.2002 93.9004s58.0996 34.4004 93.8994 36.0996c37 2.10059 147.9 2.10059 184.9 0
+c35.9004 -1.7998 67.7002 -10 93.9004 -36.1992c26.2998 -26.2002 34.5 -58 36.1992 -93.9004zM398.8 60c11.7002 29.4004 9 99.5 9 132.1c0 32.6006 2.7002 102.601 -9 132.101c-7.89941 19.7002 -23 34.7998 -42.5996 42.5996c-29.4004 11.6006 -99.5 9 -132.101 9
+c-32.5996 0 -102.6 2.7002 -132.1 -9c-19.7002 -7.89941 -34.7998 -23 -42.5996 -42.5996c-11.6006 -29.4004 -9 -99.5 -9 -132.101c0 -32.5996 -2.7002 -102.6 9 -132.1c7.89941 -19.7002 23 -34.7998 42.5996 -42.5996c29.4004 -11.6006 99.5 -9 132.1 -9
+c32.6006 0 102.601 -2.7002 132.101 9c19.7002 7.89941 34.7998 23 42.5996 42.5996z"/></svg><span class="label">Instagram</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.github.com/tadeoricasoli/" target="_blank" rel="noopener" class="icon" aria-label="GitHub">
+                    <svg class="ico" viewBox="0 0 480 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M186.1 119.3c0 -20.8994 -10.8994 -55.0996 -36.6992 -55.0996c-25.8008 0 -36.7002 34.2002 -36.7002 55.0996c0 20.9004 10.8994 55.1006 36.7002 55.1006c25.7998 0 36.6992 -34.2002 36.6992 -55.1006zM480 169.8c0 -31.8994 -3.2002 -65.7002 -17.5 -95
+c-37.9004 -76.5996 -142.1 -74.7998 -216.7 -74.7998c-75.7998 0 -186.2 -2.7002 -225.6 74.7998c-14.6006 29 -20.2002 63.1006 -20.2002 95c0 41.9004 13.9004 81.5 41.5 113.601c-5.2002 15.7998 -7.7002 32.3994 -7.7002 48.7998
+c0 21.5 4.90039 32.2998 14.6006 51.7998c45.2998 0 74.2998 -9 108.8 -36c29 6.90039 58.7998 10 88.7002 10c27 0 54.1992 -2.90039 80.3994 -9.2002c34 26.7002 63 35.2002 107.8 35.2002c9.80078 -19.5 14.6006 -30.2998 14.6006 -51.7998
+c0 -16.4004 -2.60059 -32.7002 -7.7002 -48.2002c27.5 -32.4004 39 -72.2998 39 -114.2zM415.7 119.3c0 43.9004 -26.7002 82.6006 -73.5 82.6006c-18.9004 0 -37 -3.40039 -56 -6c-14.9004 -2.30078 -29.7998 -3.2002 -45.1006 -3.2002
+c-15.1992 0 -30.0996 0.899414 -45.0996 3.2002c-18.7002 2.59961 -37 6 -56 6c-46.7998 0 -73.5 -38.7002 -73.5 -82.6006c0 -87.7998 80.4004 -101.3 150.4 -101.3h48.1992c70.3008 0 150.601 13.4004 150.601 101.3zM333.1 174.4
+c25.8008 0 36.7002 -34.2002 36.7002 -55.1006c0 -20.8994 -10.8994 -55.0996 -36.7002 -55.0996c-25.7998 0 -36.6992 34.2002 -36.6992 55.0996c0 20.9004 10.8994 55.1006 36.6992 55.1006z"/></svg><span class="label">GitHub</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/tadeoricasoli/" target="_blank" rel="noopener" class="icon" aria-label="LinkedIn">
+                    <svg class="ico" viewBox="0 0 448 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M100.28 0h-92.8799v299.1h92.8799v-299.1zM53.79 339.9c-29.7002 0 -53.79 24.5996 -53.79 54.2998c0 29.6875 24.1025 53.79 53.79 53.79s53.79 -24.1025 53.79 -53.79c0 -29.7002 -24.0996 -54.2998 -53.79 -54.2998zM447.9 0h-92.6807v145.6
+c0 34.7002 -0.700195 79.2002 -48.29 79.2002c-48.29 0 -55.6895 -37.7002 -55.6895 -76.7002v-148.1h-92.7803v299.1h89.0801v-40.7998h1.2998c12.4004 23.5 42.6904 48.2998 87.8799 48.2998c94 0 111.28 -61.8994 111.28 -142.3v-164.3h-0.0996094z"/></svg><span class="label">LinkedIn</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/@tadeoricasoli" target="_blank" rel="noopener" class="icon" aria-label="YouTube">
+                    <svg class="ico" viewBox="0 0 576 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M549.655 323.917c11.4121 -42.8672 11.4121 -132.305 11.4121 -132.305s0 -89.4385 -11.4121 -132.306c-6.28125 -23.6494 -24.7871 -41.5 -48.2842 -47.8203c-42.5908 -11.4863 -213.371 -11.4863 -213.371 -11.4863s-170.78 0 -213.371 11.4863
+c-23.4971 6.32031 -42.0029 24.1709 -48.2842 47.8203c-11.4121 42.8672 -11.4121 132.306 -11.4121 132.306s0 89.4375 11.4121 132.305c6.28125 23.6504 24.7871 42.2754 48.2842 48.5967c42.5908 11.4863 213.371 11.4863 213.371 11.4863s170.781 0 213.371 -11.4863
+c23.4971 -6.32031 42.0029 -24.9463 48.2842 -48.5967zM232.145 110.409l142.739 81.2012l-142.739 81.2051v-162.406z"/></svg><span class="label">YouTube</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://open.spotify.com/user/11146905710?si=eab939c099264a8a" target="_blank" rel="noopener" class="icon" aria-label="Spotify">
+                    <svg class="ico" viewBox="0 0 496 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M248 440c136.9 0 248 -111.1 248 -248s-111.1 -248 -248 -248s-248 111.1 -248 248s111.1 248 248 248zM348.7 75.0996c8.09961 0 15.2002 6.30078 15.2002 15.4004s-3.60059 12.5996 -9.7002 16.5c-71.4004 42.7002 -155.101 44.2998 -237 26.2002
+c-7.5 -1.60059 -13.6006 -6.5 -13.6006 -16.7998c0 -8.10059 6.10059 -15.8008 15.8008 -15.8008c2.89941 0 8 1.60059 11.8994 2.60059c71.7002 14.7002 144.3 13.0996 206.7 -24.5c3.90039 -2.2998 6.5 -3.60059 10.7002 -3.60059zM375.6 140.7
+c10.9004 0 19.3008 8.7002 19.4004 19.5c0 8.7002 -3.2002 14.8994 -11.2998 19.7002c-49.4004 29.3994 -112.101 45.5 -177 45.5c-41.6006 0 -70 -5.80078 -97.7998 -13.6006c-10.3008 -2.89941 -15.5 -10 -15.5 -20.7002c0 -10.6992 8.69922 -19.3994 19.3994 -19.3994
+c4.5 0 7.10059 1.2998 11.9004 2.59961c82.8994 22.5 176.1 7.60059 238.6 -29.3994c3.60059 -1.90039 7.10059 -4.2002 12.2998 -4.2002zM406.6 216.9c12.2002 0 23.2002 9.69922 23.2002 23.2998c0 11.8994 -5.09961 18.0996 -12.8994 22.5996
+c-55.9004 32.6006 -132.4 47.7998 -205.4 47.7998c-42.9004 0 -82.2998 -4.89941 -117.5 -15.1992c-9 -2.60059 -17.4004 -10.3008 -17.4004 -23.9004c0 -13.2998 10.1006 -23.5996 23.3008 -23.5996c4.7998 0 9.2998 1.59961 12.8994 2.59961
+c82.4004 23 209.7 12.7998 280.9 -29.7002c4.5 -2.59961 7.7002 -3.89941 12.8994 -3.89941z"/></svg><span class="label">Spotify</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.reddit.com/user/tadeoricasoli" target="_blank" rel="noopener" class="icon" aria-label="Reddit">
+                    <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M440.3 244.5c55.2998 0 73.7002 -74.0996 23.7998 -99.7002c2.2002 -7.89941 3.10059 -16.7002 3.10059 -25.0996c0 -83.7998 -94.4004 -151.7 -210.8 -151.7c-115.9 0 -210.301 67.9004 -210.301 151.7c0 8.39941 0.800781 16.7998 2.60059 24.7002
+c-50.9004 25.5 -32.7002 100.1 22.8994 100.1c15 0 28.7002 -6.2002 38.4004 -16.2998c35.7998 24.7002 83.4004 40.5996 136.3 42.7998l30.4004 137.6c1.2998 4.90039 6.09961 8.40039 11 7.10059l97.3994 -21.6006c6.60059 12.7002 19.9004 22 35.3008 22
+c22.0996 0 39.6992 -18.0996 39.6992 -39.6992c0 -21.6006 -17.6992 -39.7002 -39.6992 -39.7002c-21.6006 0 -39.2002 17.5996 -39.2002 39.2002l-88.2002 19.7998l-27.7002 -124.8c53.2998 -1.7002 101.4 -17.6006 137.101 -42.3008
+c9.69922 9.7002 22.8994 15.9004 37.8994 15.9004zM129.4 139.1c0 -21.5996 17.6992 -39.2998 39.6992 -39.1992c21.6006 0 39.2002 17.5996 39.2002 39.1992c0 22.1006 -17.5996 39.7002 -39.2002 39.7002c-22.0996 0 -39.6992 -17.7002 -39.6992 -39.7002zM343.7 45.5996
+c4 3.5 4 9.7002 -0.100586 13.7002c-3.5 3.5 -9.69922 3.5 -13.1992 0c-29 -29 -121.2 -28.5 -149 0c-3.5 3.5 -9.7002 3.5 -13.2002 0c-4 -4 -4 -10.2002 0 -13.7002c36.3994 -36.3994 139.1 -36.3994 175.5 0zM342.9 99.7998c22 0 39.5996 17.7002 39.6992 39.2002
+c0 22.0996 -17.6992 39.7002 -39.6992 39.7002c-21.6006 0 -39.2002 -17.7002 -39.2002 -39.7002c0 -21.5996 17.5996 -39.2002 39.2002 -39.2002z"/></svg><span class="label">Reddit</span>
+                  </a>
+                </li>
+              </ul>
+            </section>
+          </div>
+          <div>
+            <section>
+              <h2>Get in touch</h2>
+              <form method="POST" action="https://formsubmit.co/ricasolit@gmail.com" id="contact-form">
+              <input type="hidden" name="_subject" value="You've got a new message" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+              <div class="fields">
+                <div class="field half">
+                  <input type="text" name="name" id="nombre" placeholder="Name" required />
+                </div>
+                <div class="field half">
+                  <input type="email" name="email" id="email" placeholder="e-mail" required
+                    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,}"
+                    title="Enter a valid e-mail address, e.g. name@example.com" autocomplete="email" />
+                  <div class="error-message" id="email-error" aria-live="polite"></div>
+                </div>
+                <div class="field">
+                  <textarea name="message" id="mensaje" placeholder="Message" rows="6" required></textarea>
+                </div>
+              </div>
+              <ul class="actions">
+                <li><input type="submit" value="Send" class="primary" /></li>
+              </ul>
+            </form>
+            </section>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.poptrox.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script>
+    // Envío del formulario sin PHP (FormSubmit) con el mismo aviso de antes
+    // Validación del e-mail: exige usuario, "@", dominio y una extensión (.com, .ar, etc.)
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9\-]+(\.[a-zA-Z0-9\-]+)*\.[a-zA-Z]{2,}$/;
+    function validarEmail(mostrar) {
+      const v = emailInput.value.trim();
+      let msg = '';
+      if (!v) msg = 'Please enter your e-mail.';
+      else if (!v.includes('@')) msg = 'The e-mail must include an "@".';
+      else if (!emailRegex.test(v)) msg = 'Enter a valid e-mail, e.g. name@example.com';
+      emailInput.setCustomValidity(msg);
+      if (mostrar) emailError.textContent = msg;
+      return !msg;
+    }
+    emailInput.addEventListener('input', () => validarEmail(emailError.textContent !== ''));
+    emailInput.addEventListener('blur', () => validarEmail(emailInput.value.trim() !== ''));
+    emailInput.addEventListener('invalid', () => validarEmail(true));
+
+    document.getElementById('contact-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      if (!validarEmail(true)) { emailInput.focus(); return; }
+      const btn = form.querySelector('input[type="submit"]');
+      btn.disabled = true; btn.value = 'Sending...';
+      const popup = { buttonsStyling: true };
+      try {
+        const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.success === 'false' || data.success === false) throw new Error(data.message || 'Error');
+        form.reset();
+        Swal.fire({ ...popup, icon: 'success', title: 'Message Sent', text: 'Thank you, I will reply soon!', confirmButtonText: 'OK' });
+      } catch (err) {
+        const detail = (err && err.message && err.message !== 'Error' && err.message !== 'Failed to fetch') ? err.message : 'Please try again later.';
+        Swal.fire({ ...popup, icon: 'error', title: 'Oops', text: 'The message could not be sent. ' + detail, confirmButtonText: 'OK' });
+      } finally {
+        btn.disabled = false; btn.value = 'Send';
+      }
+    });
+    </script>
+
+  <script>
+  // Deshabilitar clic derecho
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  });
+
+  // Deshabilitar teclas comunes del inspector
+ document.addEventListener('keydown', function (e) {
+  const key = e.key.toLowerCase();
+
+  if (
+    e.key === 'F12' || // F12
+    (e.ctrlKey && e.shiftKey && ['i','j','c','k','s','h','e','f'].includes(key)) || // Ctrl+Shift+ combinaciones comunes
+    (e.ctrlKey && (key === 'u' || key === 'p' || key === 's')) || // Ctrl+U/P/S
+    (e.ctrlKey && e.altKey && key === 'i') // Ctrl+Alt+I
+  ) {
+    e.preventDefault();
+    alert('Access to developer tools and source code viewing is disabled.');
+  }
+});
+</script>
+
+</body>
+</html>
