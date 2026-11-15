@@ -266,7 +266,7 @@
 		usePopupForceClose: true,
 		usePopupLoader: true,
 		usePopupNav: true,
-		windowMargin: 50
+		windowMargin: (window.matchMedia('(max-width: 736px)').matches ? 0 : 50)
 	});
 
 	// Desactivar clic en imágenes cuando está abierto el panel #footer (formulario de contacto)

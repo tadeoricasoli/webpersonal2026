@@ -89,6 +89,57 @@
       ul.icons li .icon .ico { height: 1.5em; vertical-align: middle; }
       #header nav .ico-nav { fill: #505051; margin-left: 0.75em; }
 
+      /* Celular: la foto ampliada ocupa toda la pantalla (se ve completa, sin recortar), con el fondo esfumado de la página */
+      @media screen and (max-width: 736px) {
+        .poptrox-popup {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          height: 100dvh !important;
+          margin: 0 !important;
+          background: rgba(31, 34, 36, 0.35) !important;
+          box-shadow: none !important;
+        }
+        .poptrox-popup {
+          display: flex !important;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .poptrox-popup .pic {
+          width: 100% !important;
+          height: auto !important;
+          flex: 0 1 auto;
+          min-height: 0;
+        }
+        .poptrox-popup .pic img {
+          display: block;
+          width: 100% !important;
+          height: auto !important;
+          max-height: 100dvh;
+          object-fit: contain;
+        }
+        /* Nombre de la foto: dentro de la imagen, abajo a la izquierda, como en la galería */
+        .poptrox-popup .caption {
+          display: block !important;
+          position: relative !important;
+          flex: 0 0 auto;
+          margin-top: -4.5em;
+          height: 4.5em;
+          padding: 0 1.5em 1.25em 1.5em !important;
+          display: flex !important;
+          align-items: flex-end;
+          background-image: linear-gradient(to top, rgba(10,17,25,0.45) 10%, rgba(10,17,25,0) 100%) !important;
+          pointer-events: none;
+          z-index: 2;
+        }
+        .poptrox-popup .caption h2 {
+          font-size: 0.9em;
+          margin: 0 !important;
+        }
+      }
+
       .error-message {
         color: #ff6b6b;
         font-size: 0.9em;
