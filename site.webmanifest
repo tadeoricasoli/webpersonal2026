@@ -1,0 +1,26 @@
+{
+  "name": "Tadeo Pedro Ricasoli",
+  "short_name": "TPR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#242629",
+  "theme_color": "#242629",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dtmlyikjn/image/upload/c_scale,w_192/logo-TPR_sglmxw.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dtmlyikjn/image/upload/c_scale,w_512/logo-TPR_sglmxw.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dtmlyikjn/image/upload/b_rgb:1f2224,c_scale,w_512/logo-TPR_sglmxw.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}

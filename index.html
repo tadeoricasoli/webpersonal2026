@@ -3,9 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>Tadeo Pedro Ricasoli</title>
-    <meta name="description" content="Shoots photos, writes code, drinks mate. Repeat. Portfolio de fotografía de Tadeo Pedro Ricasoli: paisajes de Argentina, deportes, autos y más." />
-    <link rel="icon" href="images/tpr_prada_ico.ico" type="image/x-icon" />
+    <title>Tadeo Pedro Ricasoli · Fotografía</title>
+    <meta name="description" content="Shoots photos, writes code, drinks mate. Repeat." />
+    <link rel="icon" type="image/png" sizes="48x48" href="https://res.cloudinary.com/dtmlyikjn/image/upload/c_scale,w_48/logo-TPR_sglmxw.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dtmlyikjn/image/upload/c_scale,w_32/logo-TPR_sglmxw.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dtmlyikjn/image/upload/c_scale,w_16/logo-TPR_sglmxw.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dtmlyikjn/image/upload/b_rgb:1f2224,c_scale,w_180/logo-TPR_sglmxw.jpg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#242629" />
+    <link rel="canonical" href="https://tadeoricasoli.com/" />
+    <!-- Datos estructurados: le dicen a Google quién es el dueño del sitio y cuáles son sus perfiles -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Tadeo Pedro Ricasoli",
+  "alternateName": [
+    "Tadeo Ricasoli",
+    "tadeoricasoli",
+    "TPR"
+  ],
+  "url": "https://tadeoricasoli.com/",
+  "image": "https://res.cloudinary.com/dtmlyikjn/image/upload/c_scale,w_512/logo-TPR_sglmxw.png",
+  "jobTitle": "Fotógrafo",
+  "description": "Shoots photos, writes code, drinks mate. Repeat.",
+  "sameAs": [
+    "https://www.instagram.com/tadeoricasoli/",
+    "https://www.linkedin.com/in/tadeoricasoli/",
+    "https://www.youtube.com/@tadeoricasoli",
+    "https://x.com/tadeoricasoli",
+    "https://www.facebook.com/tadeoricasoli/",
+    "https://www.github.com/tadeoricasoli/",
+    "https://www.reddit.com/user/ricasolitadeo/",
+    "https://open.spotify.com/user/11146905710"
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Tadeo Pedro Ricasoli",
+  "alternateName": "tadeoricasoli.com",
+  "url": "https://tadeoricasoli.com/"
+}
+    </script>
+    <!-- Vista previa al compartir el enlace (WhatsApp, Instagram, LinkedIn, X) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:url" content="https://tadeoricasoli.com/" />
+    <meta property="og:site_name" content="tadeoricasoli.com" />
+    <meta property="og:title" content="Tadeo Pedro Ricasoli" />
+    <meta property="og:description" content="Shoots photos, writes code, drinks mate. Repeat." />
+    <meta property="og:image" content="https://res.cloudinary.com/dtmlyikjn/image/upload/q_auto:good,c_fill,g_south,w_1200,h_630/v1746844654/08_mrndg1.jpg" />
+    <meta property="og:image:secure_url" content="https://res.cloudinary.com/dtmlyikjn/image/upload/q_auto:good,c_fill,g_south,w_1200,h_630/v1746844654/08_mrndg1.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Upside Down" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -121,16 +177,18 @@
           object-fit: contain;
         }
         /* Nombre de la foto: dentro de la imagen, abajo a la izquierda, como en la galería */
+        /* Solo cuando Poptrox la muestra (mientras carga la oculta), así no queda el título de la foto anterior */
+        .poptrox-popup .caption:not([style*="none"]) {
+          display: flex !important;
+        }
         .poptrox-popup .caption {
-          display: block !important;
           position: relative !important;
           flex: 0 0 auto;
-          margin-top: -4.5em;
-          height: 4.5em;
-          padding: 0 1.5em 1.25em 1.5em !important;
-          display: flex !important;
+          margin-top: -6.5em;
+          height: 6.5em;
+          padding: 0 0.9em 1.1em 0.9em !important;
           align-items: flex-end;
-          background-image: linear-gradient(to top, rgba(10,17,25,0.45) 10%, rgba(10,17,25,0) 100%) !important;
+          background-image: linear-gradient(to top, rgba(10,17,25,0.7) 0%, rgba(10,17,25,0.35) 55%, rgba(10,17,25,0) 100%) !important;
           pointer-events: none;
           z-index: 2;
         }
@@ -140,10 +198,75 @@
         }
       }
 
+      /* Contador "3 / 12" en la foto ampliada */
+      .poptrox-popup .pt-counter {
+        position: absolute;
+        top: 1.25em;
+        left: 1.25em;
+        z-index: 3;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.8em;
+        letter-spacing: 0.15em;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      }
+      .poptrox-popup.loading .pt-counter { opacity: 0; }
+      @media screen and (max-width: 736px) {
+        .poptrox-popup .pt-counter { top: calc(env(safe-area-inset-top, 0px) + 1em); left: 1.1em; }
+      }
+      .poptrox-popup .pic img { transform-origin: center center; will-change: transform; }
+      /* Indicador de carga bien visible mientras se descarga la foto ampliada */
+      .poptrox-popup .loader { opacity: 0.85 !important; }
+      .poptrox-popup.loading .caption { visibility: hidden; }
+
+      /* Miniaturas: versión difuminada de fondo y la foto aparece suavemente al cargar */
+      #main .thumb.lqip { background-size: cover; background-position: center; }
+      #main .thumb > a.image { transition: opacity 0.6s ease; }
+      #main .thumb > a.image.lqip-loading { opacity: 0; }
+
+      /* Ficha técnica: oculta en la galería, visible debajo del título en la foto ampliada */
+      #main .thumb > p.exif { display: none; }
+      /* Título pegado a la ficha técnica */
+      /* Texto más cerca del borde izquierdo (con un margen mínimo) */
+      .poptrox-popup .caption { padding-left: 1em !important; padding-right: 1em !important; }
+      .poptrox-popup .caption h2 {
+        margin: 0 0 0.1em 0 !important;
+        line-height: 1.3;
+      }
+      .poptrox-popup .caption p.exif {
+        display: block;
+        margin: 0 0 0.9em 0;
+        font-size: 0.7em;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.4;
+      }
+      @media screen and (max-width: 736px) {
+        .poptrox-popup .caption { flex-direction: column; justify-content: flex-end; align-items: flex-start; }
+        .poptrox-popup .caption p.exif { font-size: 0.65em; color: rgba(255, 255, 255, 0.85); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+      }
+
+      /* Celular: márgenes mínimos, igual que en la computadora */
+      @media screen and (max-width: 736px) {
+        .poptrox-popup .caption { padding: 0 0.6em 0.55em 0.6em !important; }
+        .poptrox-popup .caption p.exif { margin-bottom: 0 !important; }
+        .poptrox-popup .pt-counter { left: 0.75em; }
+      }
+
       .error-message {
         color: #ff6b6b;
         font-size: 0.9em;
         margin-top: 5px;
+      }
+
+      /* Títulos de la galería: cerca del borde izquierdo e inferior, igual que en la foto ampliada */
+      #main .thumb > h2 {
+        left: 1.25em;
+        bottom: 1em;
+      }
+      @media screen and (max-width: 736px) {
+        #main .thumb > h2 { left: 0.9em; bottom: 0.8em; }
       }
 
       #main:hover .thumb {
@@ -192,72 +315,84 @@ c29.0996 -29.6006 77.2998 -49.7002 131.3 -49.7002c16.5 0 33 1.90039 49 5.59961l1
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844655/01_cxwimd.webp" alt="Glaciar Perito Moreno" loading="lazy" width="300" height="200" />
           </a>
           <h2>GLACIAR PERITO MORENO</h2>
+          <p class="exif">Nikon D5600 · 17 mm · f/13 · 1/640 s · ISO 200</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844653/02_urb7ry.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/02_urb7ry.webp" alt="Sarmiento de Junín" loading="lazy" width="300" height="200" />
           </a>
           <h2>SARMIENTO DE JUNÍN</h2>
+          <p class="exif">Nikon D5600 · 102 mm · f/4.5 · 1/60 s · ISO 2800</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1751401847/03_c7rhkx.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1751401847/03_c7rhkx.webp" alt="CRYING LIGHTNING" loading="lazy" width="300" height="200" />
           </a>
           <h2>CRYING LIGHTNING</h2>
+          <p class="exif">Nikon D5600 · 17 mm · f/2.8 · 1/60 s · ISO 7200</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844653/04_uafpo4.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/04_uafpo4.webp" alt="CAÑÓN DEL ATUEL" loading="lazy" width="300" height="200" />
           </a>
           <h2>MENDOZA</h2>
+          <p class="exif">Nikon D5600 · 300 mm · f/5.6 · 1/500 s · ISO 200</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844653/05_hsizjh.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844653/05_hsizjh.webp" alt="107 VISA OPEN" loading="lazy" width="300" height="200" />
           </a>
           <h2>116 VISA OPEN</h2>
+          <p class="exif">Nikon D5600 · 210 mm · f/7.1 · 1/800 s · ISO 200</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844656/06_kzskn3.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844656/06_kzskn3.webp" alt="ENTRE RÍOS" loading="lazy" width="300" height="200" />
           </a>
           <h2>ENTRE RÍOS</h2>
+          <p class="exif">Nikon D5600 · 18 mm · f/3.5 · 1/60 s · ISO 800</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1761569918/07_aep8d1_o7rp2i.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1761570532/07_aep8d1_kgls9m.webp" alt="PITU" loading="lazy" width="300" height="200" />
           </a>
           <h2>PITU</h2>
+          <p class="exif">Nikon D7100 · 17 mm · f/8 · 1/250 s · ISO 125</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844654/08_mrndg1.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844654/08_mrndg1.webp" alt="UPSIDE DOWN" loading="lazy" width="300" height="200" />
           </a>
           <h2>UPSIDE DOWN</h2>
+          <p class="exif">Nikon D5600 · 300 mm · f/5.6 · 1/500 s · ISO 280</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844656/09_bbaulk.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1761570741/09_bbaulk_csswko.webp" alt="JUJUY" loading="lazy" width="300" height="200" />
           </a>
           <h2>YUNGAS</h2>
+          <p class="exif">Nikon D5600 · 50 mm · f/8 · 1/250 s · ISO 200</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844655/10_zdujp0.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844655/10_zdujp0.webp" alt="TC" loading="lazy" width="300" height="200" />
           </a>
           <h2>TC</h2>
+          <p class="exif">Nikon D5600 · 300 mm · f/5.6 · 1/500 s · ISO 200</p>
         </article>
         <article class="thumb">
           <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844654/11_hfvzzh.webp" class="image">
             <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844654/11_hfvzzh.webp" alt="FIRE BIRDS" loading="lazy" width="300" height="200" />
           </a>
           <h2>FIRE BIRDS</h2>
+          <p class="exif">Nikon D5600 · 250 mm · f/5.6 · 1/250 s · ISO 400</p>
         </article>
         <article class="thumb">
-          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/v1746844656/12_zp65w1.webp" class="image">
-            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/v1746844656/12_zp65w1.webp" alt="B&W" loading="lazy" width="300" height="200" />
+          <a href="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_limit,w_2560/12_s4colh.webp" class="image">
+            <img src="https://res.cloudinary.com/dtmlyikjn/image/upload/f_auto,q_auto,c_fill,w_800/12_1_pl0rw7.webp" alt="B&W" loading="lazy" width="300" height="200" />
           </a>
           <h2>RECORDING</h2>
+          <p class="exif">Nikon D5600 · 50 mm · f/2.8 · 1/60 s · ISO 1400</p>
         </article>
       </div>
       </div>
@@ -327,7 +462,7 @@ c82.4004 23 209.7 12.7998 280.9 -29.7002c4.5 -2.59961 7.7002 -3.89941 12.8994 -3
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.reddit.com/user/tadeoricasoli" target="_blank" rel="noopener" class="icon" aria-label="Reddit">
+                  <a href="https://www.reddit.com/user/ricasolitadeo/" target="_blank" rel="noopener" class="icon" aria-label="Reddit">
                     <svg class="ico" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M440.3 244.5c55.2998 0 73.7002 -74.0996 23.7998 -99.7002c2.2002 -7.89941 3.10059 -16.7002 3.10059 -25.0996c0 -83.7998 -94.4004 -151.7 -210.8 -151.7c-115.9 0 -210.301 67.9004 -210.301 151.7c0 8.39941 0.800781 16.7998 2.60059 24.7002
 c-50.9004 25.5 -32.7002 100.1 22.8994 100.1c15 0 28.7002 -6.2002 38.4004 -16.2998c35.7998 24.7002 83.4004 40.5996 136.3 42.7998l30.4004 137.6c1.2998 4.90039 6.09961 8.40039 11 7.10059l97.3994 -21.6006c6.60059 12.7002 19.9004 22 35.3008 22
 c22.0996 0 39.6992 -18.0996 39.6992 -39.6992c0 -21.6006 -17.6992 -39.7002 -39.6992 -39.7002c-21.6006 0 -39.2002 17.5996 -39.2002 39.2002l-88.2002 19.7998l-27.7002 -124.8c53.2998 -1.7002 101.4 -17.6006 137.101 -42.3008
@@ -342,10 +477,11 @@ c0 22.0996 -17.6992 39.7002 -39.6992 39.7002c-21.6006 0 -39.2002 -17.7002 -39.20
           <div>
             <section>
               <h2>Get in touch</h2>
-              <form method="POST" action="https://formsubmit.co/ricasolit@gmail.com" id="contact-form">
-              <input type="hidden" name="_subject" value="You've got a new message" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+              <form method="POST" action="https://api.web3forms.com/submit" id="contact-form">
+              <input type="hidden" name="access_key" value="f9aa13bb-5222-4ef2-8a37-d82ca3463afe" />
+              <input type="hidden" name="from_name" value="Web TPR" />
+              <input type="hidden" name="subject" value="Web TPR – Nuevo mensaje" />
+              <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
               <div class="fields">
                 <div class="field half">
                   <input type="text" name="name" id="nombre" placeholder="Name" required />
@@ -378,7 +514,7 @@ c0 22.0996 -17.6992 39.7002 -39.6992 39.7002c-21.6006 0 -39.2002 -17.7002 -39.20
     <script src="assets/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script>
-    // Envío del formulario sin PHP (FormSubmit) con el mismo aviso de antes
+    // Envío del formulario sin PHP (Web3Forms) con el mismo aviso de antes
     // Validación del e-mail: exige usuario, "@", dominio y una extensión (.com, .ar, etc.)
     const emailInput = document.getElementById('email');
     const emailError = document.getElementById('email-error');
@@ -397,23 +533,40 @@ c0 22.0996 -17.6992 39.7002 -39.6992 39.7002c-21.6006 0 -39.2002 -17.7002 -39.20
     emailInput.addEventListener('blur', () => validarEmail(emailInput.value.trim() !== ''));
     emailInput.addEventListener('invalid', () => validarEmail(true));
 
+    // Anti-spam: los bots completan el formulario en segundos, llenan el campo oculto o pegan muchos enlaces
+    const pageLoaded = Date.now();
+    const sentOk = () => Swal.fire({ buttonsStyling: true, icon: 'success', title: 'Message Sent', text: 'Thank you, I will reply soon!', confirmButtonText: 'OK' });
+
     document.getElementById('contact-form').addEventListener('submit', async function (e) {
       e.preventDefault();
       const form = e.target;
       if (!validarEmail(true)) { emailInput.focus(); return; }
+      const popup = { buttonsStyling: true };
+      // 1) Campo trampa completado o envío en menos de 4 segundos: es un bot -> simular éxito sin enviar nada
+      const msgText = form.querySelector('[name="message"]').value;
+      // 1b) Palabras típicas de spam/publicidad -> también se descarta en silencio
+      const spam = /backlinks?|link building|guest post|seo services|rank your website|first page of google|crypto|bitcoin|casino|viagra|cialis|forex|loan offer|escort|porn/i;
+      if (form.querySelector('[name="botcheck"]').checked || Date.now() - pageLoaded < 4000 || spam.test(msgText)) {
+        form.reset(); sentOk(); return;
+      }
+      // 2) Mensajes con más de 2 enlaces: típico de spam/publicidad
+      const links = (msgText.match(/https?:\/\/|www\./gi) || []).length;
+      if (links > 2) {
+        Swal.fire({ ...popup, icon: 'error', title: 'Oops', text: 'Please remove the links from your message.', confirmButtonText: 'OK' });
+        return;
+      }
       const btn = form.querySelector('input[type="submit"]');
       btn.disabled = true; btn.value = 'Sending...';
-      const popup = { buttonsStyling: true };
       try {
-        const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+        const res = await fetch(form.action, {
           method: 'POST',
           headers: { 'Accept': 'application/json' },
           body: new FormData(form)
         });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok || data.success === 'false' || data.success === false) throw new Error(data.message || 'Error');
+        if (!res.ok || !data.success) throw new Error(data.message || 'Error');
         form.reset();
-        Swal.fire({ ...popup, icon: 'success', title: 'Message Sent', text: 'Thank you, I will reply soon!', confirmButtonText: 'OK' });
+        sentOk();
       } catch (err) {
         const detail = (err && err.message && err.message !== 'Error' && err.message !== 'Failed to fetch') ? err.message : 'Please try again later.';
         Swal.fire({ ...popup, icon: 'error', title: 'Oops', text: 'The message could not be sent. ' + detail, confirmButtonText: 'OK' });

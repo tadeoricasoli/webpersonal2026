@@ -236,6 +236,17 @@
 
 	});
 
+	// En el celular, la foto ampliada se pide más liviana (1800 px en lugar de 2560): carga bastante más rápido
+	if (window.matchMedia('(max-width: 736px)').matches)
+		$('.thumb > a.image').each(function() {
+			this.setAttribute('href', this.getAttribute('href').replace('c_limit,w_2560', 'c_limit,w_1800'));
+		});
+
+	// Lista de fotos ampliadas (se guarda antes de iniciar Poptrox, que quita los href de los enlaces)
+	var ptHrefs = $('.thumb > a.image').map(function() {
+		return new URL(this.getAttribute('href'), location.href).href;
+	}).get();
+
 	// Poptrox.
 	$main.poptrox({
 		baseZIndex: 20000,
@@ -267,6 +278,244 @@
 		usePopupLoader: true,
 		usePopupNav: true,
 		windowMargin: (window.matchMedia('(max-width: 736px)').matches ? 0 : 50)
+	});
+
+	// ===== Foto ampliada: deslizar, cerrar hacia abajo, zoom con dos dedos (vuelve al soltar), contador y precarga =====
+	// Izquierda = siguiente, derecha = anterior (después de la última viene la primera), abajo = cerrar.
+	(function() {
+		var popup = document.querySelector('.poptrox-popup');
+		if (!popup) return;
+
+		// Lista de fotos ampliadas, para el contador y la precarga
+		var hrefs = ptHrefs;
+		var total = hrefs.length, current = -1, preloaded = {};
+
+		// Empezar a descargar la foto ampliada apenas el dedo toca la miniatura (o el mouse pasa por encima)
+		$('.thumb > a.image').each(function(i) {
+			this.addEventListener('touchstart', function() { preload(i); }, { passive: true });
+			this.addEventListener('mouseenter', function() { preload(i); });
+		});
+
+		// Red de seguridad: si al tocar una miniatura la foto no se abre (pasaba a veces en el primer toque
+		// en iPhone), se vuelve a intentar sola, sin que haya que tocar de nuevo.
+		$('.thumb > a.image').each(function() {
+			var a = this;
+			a.addEventListener('click', function() {
+				if (a.dataset.retry === '1') { a.dataset.retry = ''; return; }
+				setTimeout(function() {
+					if (!document.body.classList.contains('modal-active') && !document.body.classList.contains('content-active')) {
+						a.dataset.retry = '1';
+						$(a).trigger('click');
+						a.dataset.retry = '';
+					}
+				}, 500);
+			});
+		});
+
+		// Si la foto ya terminó de descargarse pero la galería no se enteró, avisarle
+		setInterval(function() {
+			if (!document.body.classList.contains('modal-active') || !popup.classList.contains('loading')) return;
+			var img = popup.querySelector('.pic img');
+			if (img && img.getAttribute('src') && img.complete && img.naturalWidth > 0) {
+				if (!img.dataset.stuck) { img.dataset.stuck = String(Date.now()); return; }
+				if (Date.now() - Number(img.dataset.stuck) > 400) { delete img.dataset.stuck; $(img).trigger('load'); }
+			} else if (img) delete img.dataset.stuck;
+		}, 200);
+
+		var counter = document.createElement('div');
+		counter.className = 'pt-counter';
+		popup.appendChild(counter);
+
+		function preload(i) {
+			var u = hrefs[(i + total) % total];
+			if (!u || preloaded[u]) return;
+			preloaded[u] = new Image();
+			preloaded[u].src = u;
+		}
+
+		// Cuando carga una foto: actualizar contador, reiniciar zoom y precargar la anterior y la siguiente
+		popup.addEventListener('load', function(e) {
+			if (e.target.tagName !== 'IMG') return;
+			var i = hrefs.indexOf(e.target.src);
+			if (i < 0) return;
+			current = i;
+			counter.textContent = (i + 1) + ' / ' + total;
+			resetZoom(false);
+			preload(i + 1); preload(i - 1);
+		}, true);
+
+		// --- estado de los gestos ---
+		var mode = null;            // 'swipe' | 'pan' | 'pinch'
+		var startX = 0, startY = 0, dx = 0, dy = 0, horizontal = null, suppressClick = false;
+		var scale = 1, tx = 0, ty = 0;                       // zoom actual
+		var pinch = null, pan = null;
+
+		function parts() { return { img: popup.querySelector('.pic img'), cap: popup.querySelector('.caption') }; }
+		function apply(img, anim) {
+			if (!img) return;
+			img.style.transition = anim ? 'transform 0.25s ease-out' : 'none';
+			img.style.transform = (scale === 1 && tx === 0 && ty === 0) ? '' : 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+		}
+		function resetZoom(anim) {
+			scale = 1; tx = 0; ty = 0;
+			var p = parts();
+			apply(p.img, anim);
+			if (p.cap) p.cap.style.opacity = '';
+			counter.style.opacity = '';
+			popup.style.opacity = ''; popup.style.transition = '';
+		}
+		function dist(t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); }
+		function mid(t) { return { x: (t[0].clientX + t[1].clientX) / 2, y: (t[0].clientY + t[1].clientY) / 2 }; }
+		function clampPan(img) {
+			if (!img) return;
+			var w = img.offsetWidth, h = img.offsetHeight;
+			var mx = Math.max(0, (w * scale - window.innerWidth) / 2 + w * 0.1);
+			var my = Math.max(0, (h * scale - window.innerHeight) / 2 + h * 0.1);
+			tx = Math.max(-mx, Math.min(mx, tx));
+			ty = Math.max(-my, Math.min(my, ty));
+		}
+
+		popup.addEventListener('touchstart', function(e) {
+			var p = parts();
+			if (e.touches.length === 2) {
+				// Zoom con dos dedos
+				mode = 'pinch';
+				var m = mid(e.touches), r = p.img ? p.img.getBoundingClientRect() : null;
+				pinch = { d0: dist(e.touches), s0: scale, tx0: tx, ty0: ty, m0: m,
+					cx: r ? r.left + r.width / 2 - tx : window.innerWidth / 2,
+					cy: r ? r.top + r.height / 2 - ty : window.innerHeight / 2 };
+				if (p.img) p.img.style.transition = 'none';
+				return;
+			}
+			if (e.touches.length !== 1) return;
+			startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+			dx = 0; dy = 0; horizontal = null;
+			if (mode === 'ignore') return;
+			mode = 'swipe';
+			if (p.img) p.img.style.transition = 'none';
+		}, { passive: true });
+
+		popup.addEventListener('touchmove', function(e) {
+			var p = parts();
+			if (mode === 'pinch' && e.touches.length === 2) {
+				e.preventDefault();
+				var s = Math.max(1, Math.min(4, pinch.s0 * dist(e.touches) / pinch.d0));
+				var m = mid(e.touches);
+				// mantener bajo los dedos el mismo punto de la foto
+				var px = (pinch.m0.x - pinch.cx - pinch.tx0) / pinch.s0;
+				var py = (pinch.m0.y - pinch.cy - pinch.ty0) / pinch.s0;
+				scale = s;
+				tx = m.x - pinch.cx - px * s;
+				ty = m.y - pinch.cy - py * s;
+				apply(p.img, false);
+				if (p.cap) p.cap.style.opacity = '0';
+				counter.style.opacity = '0';
+				return;
+			}
+			if (e.touches.length !== 1) return;
+			dx = e.touches[0].clientX - startX;
+			dy = e.touches[0].clientY - startY;
+			if (mode === 'pan') {
+				e.preventDefault();
+				tx = pan.tx0 + dx; ty = pan.ty0 + dy;
+				clampPan(p.img);
+				apply(p.img, false);
+				return;
+			}
+			if (mode !== 'swipe') return;
+			if (horizontal === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) horizontal = Math.abs(dx) > Math.abs(dy);
+			if (horizontal === null) return;
+			if (horizontal) {
+				e.preventDefault();
+				if (p.img) p.img.style.transform = 'translateX(' + dx + 'px)';
+				if (p.cap) p.cap.style.opacity = String(1 - Math.min(Math.abs(dx) / 200, 1));
+			} else if (dy > 0) {
+				// Deslizar hacia abajo: la foto baja, se achica un poco y se desvanece
+				e.preventDefault();
+				var k = Math.min(dy / 400, 1);
+				if (p.img) p.img.style.transform = 'translateY(' + dy + 'px) scale(' + (1 - 0.15 * k) + ')';
+				if (p.cap) p.cap.style.opacity = String(1 - Math.min(dy / 150, 1));
+				counter.style.opacity = String(1 - Math.min(dy / 150, 1));
+				popup.style.opacity = String(1 - 0.5 * k);
+			}
+		}, { passive: false });
+
+		function end(e) {
+			var p = parts();
+			if (mode === 'pinch') {
+				// Al soltar los dedos, la foto vuelve sola a su tamaño normal (como en Instagram)
+				suppressClick = true;
+				setTimeout(function() { suppressClick = false; }, 400);
+				resetZoom(true);
+				// esperar a que se levanten todos los dedos antes de aceptar otro gesto
+				mode = (e.touches && e.touches.length) ? 'ignore' : null;
+				return;
+			}
+			if (mode === 'ignore') { if (!e.touches || !e.touches.length) mode = null; return; }
+			if (mode === 'pan') {
+				if (Math.abs(dx) > 5 || Math.abs(dy) > 5) suppressClick = true;
+				mode = null;
+				return;
+			}
+			if (mode !== 'swipe') return;
+			mode = null;
+			if (horizontal && Math.abs(dx) > 50) {
+				suppressClick = true;
+				if (p.img) {
+					p.img.style.transition = 'transform 0.18s ease-out';
+					p.img.style.transform = 'translateX(' + (dx < 0 ? -1 : 1) * window.innerWidth + 'px)';
+				}
+				setTimeout(function() {
+					resetZoom(false);
+					$(popup).trigger(dx < 0 ? 'poptrox_next' : 'poptrox_previous');
+				}, 170);
+			} else if (horizontal === false && dy > 90) {
+				// Cerrar la foto
+				suppressClick = true;
+				if (p.img) {
+					p.img.style.transition = 'transform 0.2s ease-out';
+					p.img.style.transform = 'translateY(' + window.innerHeight + 'px) scale(0.8)';
+				}
+				popup.style.transition = 'opacity 0.2s ease-out';
+				popup.style.opacity = '0';
+				setTimeout(function() {
+					$(popup).trigger('poptrox_close');
+					setTimeout(function() { resetZoom(false); }, 350);
+				}, 190);
+			} else {
+				if (p.img) { p.img.style.transition = 'transform 0.2s ease-out'; p.img.style.transform = ''; }
+				if (p.cap) p.cap.style.opacity = '';
+				counter.style.opacity = '';
+				popup.style.transition = 'opacity 0.2s ease-out'; popup.style.opacity = '';
+			}
+		}
+		popup.addEventListener('touchend', end);
+		popup.addEventListener('touchcancel', end);
+
+		// Tocar la foto la cierra, salvo justo después de deslizar o mientras está ampliada con zoom
+		popup.addEventListener('click', function(e) {
+			// mientras la foto está cargando, un toque no la cierra (antes parecía que "no cargaba")
+			if (suppressClick || scale > 1.01 || popup.classList.contains('loading')) {
+				e.stopPropagation(); e.preventDefault();
+				suppressClick = false;
+			}
+		}, true);
+	})();
+
+	// ===== Miniaturas: vista previa difuminada mientras carga la foto =====
+	$main.children('.thumb').each(function() {
+		var thumb = this, a = thumb.querySelector('a.image'), img = a && a.querySelector('img');
+		if (!img) return;
+		var src = img.getAttribute('src');
+		if (src.indexOf('/f_auto,q_auto,c_fill,w_800/') < 0) return;
+		var blur = src.replace('/f_auto,q_auto,c_fill,w_800/', '/f_auto,q_auto,w_40,e_blur:400/');
+		thumb.style.backgroundImage = 'url(' + blur + ')';
+		thumb.classList.add('lqip');
+		a.classList.add('lqip-loading');
+		var full = new Image();
+		full.onload = full.onerror = function() { a.classList.remove('lqip-loading'); };
+		full.src = src;
+		if (full.complete) a.classList.remove('lqip-loading');
 	});
 
 	// Desactivar clic en imágenes cuando está abierto el panel #footer (formulario de contacto)
