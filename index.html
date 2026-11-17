@@ -308,6 +308,8 @@
       .poptrox-popup.loading .caption { visibility: hidden; }
 
       /* Miniaturas: versión difuminada de fondo y la foto aparece suavemente al cargar */
+      /* La <img> oculta no se descarga: la miniatura se pone como fondo recién cuando está por aparecer */
+      #main .thumb > a.image > img { display: none; }
       #main .thumb.lqip { background-size: cover; background-position: center; }
       #main .thumb > a.image { transition: opacity 0.6s ease; }
       #main .thumb > a.image.lqip-loading { opacity: 0; }

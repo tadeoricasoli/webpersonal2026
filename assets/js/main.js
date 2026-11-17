@@ -234,8 +234,9 @@
 		// This sets the background of the "image" <span> to the image pointed to by its child
 		// <img> (which is then hidden). Gives us way more flexibility.
 
-		// Set background.
-		$image.css('background-image', 'url(' + $image_img.attr('src') + ')');
+		// Set background (si el navegador lo permite, se pone recién cuando la miniatura se acerca a la pantalla; ver más abajo)
+		if (!('IntersectionObserver' in window))
+			$image.css('background-image', 'url(' + $image_img.attr('src') + ')');
 
 		// Set background position.
 		if (x = $image_img.data('position'))
@@ -522,11 +523,29 @@
 		thumb.style.backgroundImage = 'url(' + blur + ')';
 		thumb.classList.add('lqip');
 		a.classList.add('lqip-loading');
-		var full = new Image();
-		full.onload = full.onerror = function() { a.classList.remove('lqip-loading'); };
-		full.src = src;
-		if (full.complete) a.classList.remove('lqip-loading');
+		thumb._ptLoad = function() {
+			a.style.backgroundImage = 'url(' + src + ')';
+			var full = new Image();
+			full.onload = full.onerror = function() { a.classList.remove('lqip-loading'); };
+			full.src = src;
+			if (full.complete) a.classList.remove('lqip-loading');
+		};
+		if (!('IntersectionObserver' in window)) thumb._ptLoad();
 	});
+
+	// ===== Miniaturas: se descargan a medida que bajás (las visibles + las que están por aparecer) =====
+	if ('IntersectionObserver' in window) {
+		var thumbIO = new IntersectionObserver(function(entries) {
+			entries.forEach(function(en) {
+				if (!en.isIntersecting) return;
+				var th = en.target, a = th.querySelector('a.image'), img = a && a.querySelector('img');
+				thumbIO.unobserve(th);
+				if (th._ptLoad) th._ptLoad();
+				else if (a && img) a.style.backgroundImage = 'url(' + img.getAttribute('src') + ')';
+			});
+		}, { rootMargin: '600px 0px' });
+		$main.children('.thumb').each(function() { thumbIO.observe(this); });
+	}
 
 
 	// Panel Map (Leaflet se carga recién la primera vez que se abre)

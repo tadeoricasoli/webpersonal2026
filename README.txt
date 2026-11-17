@@ -68,7 +68,7 @@ tadeoricasoli/
 ### Gallery
 - Grid of photos, each with a title and the photo's **technical data (EXIF)** in italics: camera · focal length · aperture · shutter speed · ISO.
 - **LQIP (low-quality image placeholder):** each thumbnail first shows a tiny blurred version (`w_40,e_blur:400`) and fades into the real image once it has loaded.
-- Thumbnails: `c_fill,w_800`. Full size: `c_limit,w_2560` (desktop) or `w_1800` (mobile, rewritten in `main.js`).
+- Thumbnails: `c_fill,w_800`, loaded lazily as you scroll. Full size: `c_limit,w_2560` (desktop) or `w_1800` (mobile, rewritten in `main.js`).
 - A soft radial black fade behind each title keeps the text readable on any photo.
 
 ### Lightbox (Poptrox + custom code in `main.js`)
@@ -201,6 +201,7 @@ Do **not** commit private secrets: API secrets, passwords, Cloudflare tokens or 
 - Images are converted to the best format the browser supports (`f_auto`), compressed automatically (`q_auto`) and sized for each use.
 - Lighter full-size images on mobile.
 - LQIP blurred placeholders.
+- **Lazy-loaded thumbnails:** only the visible thumbnails and the ones about to scroll into view (600 px ahead) are downloaded, using `IntersectionObserver`. The first four are preloaded for a fast first paint. Older browsers fall back to loading everything.
 - Thumbnails and neighboring photos are preloaded in the lightbox.
 - The map library (Leaflet) and its tiles load only when the Map panel is opened.
 
