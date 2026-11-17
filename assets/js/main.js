@@ -57,6 +57,16 @@
 	// Scroll back to top.
 	$window.scrollTop(0);
 
+
+	// Menú ☰ en celular
+	(function() {
+		var $nav = $('#header nav'), $btn = $nav.find('.nav-toggle');
+		function setOpen(v) { $nav.toggleClass('open', v); $btn.attr('aria-expanded', v ? 'true' : 'false'); }
+		$btn.on('click', function(e) { e.preventDefault(); e.stopPropagation(); setOpen(!$nav.hasClass('open')); });
+		$nav.find('ul a').on('click', function() { setOpen(false); });
+		$(document).on('click touchstart', function(e) { if (!$(e.target).closest('#header nav').length) setOpen(false); });
+	})();
+
 	// Panels.
 	var $panels = $('.panel');
 
@@ -518,10 +528,65 @@
 		if (full.complete) a.classList.remove('lqip-loading');
 	});
 
+
+	// Panel Map (Leaflet se carga recién la primera vez que se abre)
+	(function() {
+		// PROVISORIO: lugares de ejemplo con fotos de la galería. Reemplazar por las stories.
+		var places = [
+			{ name: 'GLACIAR PERITO MORENO', place: 'Santa Cruz', lat: -50.496, lng: -73.137, photo: 0 },
+			{ name: 'MENDOZA', place: 'Mendoza', lat: -32.889, lng: -68.845, photo: 3 },
+			{ name: 'ENTRE RÍOS', place: 'Entre Ríos', lat: -31.732, lng: -60.529, photo: 5 },
+			{ name: 'YUNGAS', place: 'Jujuy', lat: -23.70, lng: -64.85, photo: 8 },
+			{ name: 'JUJUY', place: 'Purmamarca, Jujuy', lat: -23.745, lng: -65.498, photo: 12 }
+		];
+		var CARTO_KEY = 'cb1_5azb_1_96d0d2b2a535a109a73f7879';
+		var $panel = $('#places'), el = document.getElementById('places-map'), map = null, loading = false;
+		if (!el) return;
+
+		function thumbOf(i) {
+			var img = $('.thumb').eq(i).find('img').attr('src') || '';
+			return img.replace('c_fill,w_800', 'c_fill,w_400,h_280,g_auto');
+		}
+		function openPhoto(i) {
+			$panel.trigger('---hide');
+			setTimeout(function() { $('.thumb').eq(i).find('a.image').trigger('click'); }, 550);
+		}
+		function build() {
+			map = L.map(el, { zoomControl: true, attributionControl: true, scrollWheelZoom: true, worldCopyJump: false, minZoom: 3 });
+			L.tileLayer('https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=' + CARTO_KEY, {
+				maxZoom: 18,
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
+			}).addTo(map);
+			var icon = L.divIcon({ className: 'pt-pin', iconSize: [24, 24] });
+			var bounds = [];
+			places.forEach(function(p) {
+				var html = '<a class="pt-pop" data-i="' + p.photo + '"><img src="' + thumbOf(p.photo) + '" alt="" loading="lazy" /><strong>' + p.name + '</strong><span>' + p.place + '</span></a>';
+				L.marker([p.lat, p.lng], { icon: icon, title: p.name }).addTo(map).bindPopup(html, { closeButton: true, autoPanPadding: [20, 20] });
+				bounds.push([p.lat, p.lng]);
+			});
+			map.fitBounds(bounds, { padding: [40, 40] });
+			$(el).on('click', '.pt-pop', function(e) { e.preventDefault(); openPhoto(+this.getAttribute('data-i')); });
+		}
+		function load() {
+			if (map) { setTimeout(function() { map.invalidateSize(); }, 550); return; }
+			if (loading) return;
+			loading = true;
+			var css = document.createElement('link');
+			css.rel = 'stylesheet'; css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+			document.head.appendChild(css);
+			var js = document.createElement('script');
+			js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+			js.onload = function() { setTimeout(function() { build(); map.invalidateSize(); }, 550); };
+			js.onerror = function() { loading = false; el.innerHTML = '<div class="map-msg">No se pudo cargar el mapa. Probá de nuevo en un rato.</div>'; };
+			document.head.appendChild(js);
+		}
+		$panel.on('---show', load);
+	})();
+
 	// Desactivar clic en imágenes cuando está abierto el panel #footer (formulario de contacto)
 	var $images = $('.thumb > a.image');
 
-	$footer.on('---show', function() {
+	$panels.on('---show', function() {
 		console.log('Footer abierto - desactivando clic en imágenes');
 		$images.each(function() {
 			var $this = $(this);
@@ -530,7 +595,8 @@
 		});
 	});
 
-	$footer.on('---hide', function() {
+	$panels.on('---hide', function() {
+		if ($panels.filter('.active').not(this).length) return;
 		console.log('Footer cerrado - activando clic en imágenes');
 		$images.each(function() {
 			var $this = $(this);
@@ -543,7 +609,7 @@
 var $images = $('.thumb > a.image');
 
 $images.on('click', function(e) {
-  if ($('#footer').hasClass('active') && $body.hasClass('content-active')) {
+  if ($('.panel.active').length && $body.hasClass('content-active')) {
     e.preventDefault();
     e.stopImmediatePropagation();
     console.log('Clic bloqueado en imagen porque el panel contacto está abierto');

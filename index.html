@@ -142,6 +142,91 @@
       .swal2-styled.swal2-confirm:active { background-color: #287e6d !important; }
       .swal2-styled.swal2-confirm:focus { box-shadow: none !important; }
 
+
+      /* Panel Gear */
+      #gear h2 { margin-bottom: 1em; }
+      #gear .gear-list { list-style: none; margin: 0; padding: 0; }
+      #gear .gear-list li { padding: 0.85em 0; border-top: 1px solid rgba(255,255,255,0.08); }
+      #gear .gear-list li:first-child { border-top: 0; padding-top: 0; }
+      #gear .gear-list strong { display: block; color: #ffffff; font-weight: 400; letter-spacing: 0.02em; }
+      #gear .gear-list strong a { color: inherit; border-bottom: 0; text-decoration: none; }
+      #gear .gear-list strong a { transition: color 0.2s ease; }
+      #gear .gear-list strong a:hover { color: #34a58e !important; }
+      #gear .gear-list span { display: block; font-size: 0.8em; font-style: italic; color: #a0a0a1; margin-top: 0.15em; }
+      @media screen and (max-width: 736px) {
+        #header nav .ico-nav { float: right; margin-top: 1.25em; }
+        #gear .inner.split > div + div { margin-top: 1.5em; }
+      }
+
+
+      /* Menú ☰ (solo celular) */
+      #header .nav-toggle { display: none; }
+      @media screen and (max-width: 736px) {
+        #header .nav-toggle {
+          display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+          font-size: inherit; width: 4em; height: 4em; padding: 0 1.25em; margin: 0;
+          background: transparent; border: 0; box-shadow: none; cursor: pointer; vertical-align: top;
+        }
+        #header .nav-toggle span { display: block; width: 20px; height: 1.5px; background: #ffffff; transition: transform 0.3s ease, opacity 0.3s ease; }
+        #header nav.open .nav-toggle { background: #242629; }
+        #header nav.open .nav-toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        #header nav.open .nav-toggle span:nth-child(2) { opacity: 0; }
+        #header nav.open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+        #header nav > ul {
+          position: absolute; top: 100%; right: 0; min-width: 11em;
+          background: #242629; box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+          opacity: 0; visibility: hidden; transform: translateY(-6px);
+          transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+        }
+        #header nav.open > ul { opacity: 1; visibility: visible; transform: none; transition: opacity 0.25s ease, transform 0.25s ease; }
+        #header nav > ul > li { display: block; border-top: 1px solid rgba(255,255,255,0.06); }
+        #header nav > ul > li:first-child { border-top: 0; }
+        #header nav > ul > li a { display: block !important; padding: 0 1.4em !important; line-height: 3.4em; }
+        #header nav > ul > li a.active { background: #2b2e31; }
+      }
+
+
+      /* Panel Map */
+      #places h2 { margin-bottom: 1em; }
+      #places-map {
+        width: 100%; height: calc(80vh - 13em); min-height: 280px;
+        background: #1b1d1f; border: 1px solid rgba(255,255,255,0.06);
+      }
+      #places-map .map-msg { display: flex; height: 100%; align-items: center; justify-content: center; color: #a0a0a1; font-style: italic; font-size: 0.85em; }
+      #places .leaflet-container { background: #1b1d1f; font-family: inherit; }
+      #places .leaflet-control-attribution { background: rgba(27,29,31,0.75); color: #707071; font-size: 10px; }
+      #places .leaflet-control-attribution a { color: #a0a0a1; border: 0; }
+      #places .leaflet-bar a { background: #242629; color: #ffffff; border-bottom-color: #2f3235; }
+      #places .leaflet-bar a:hover { background: #2f3235; color: #34a58e; }
+      #places .leaflet-bar { border: 1px solid rgba(255,255,255,0.08); box-shadow: none; }
+      .pt-pin { position: relative; }
+      .pt-pin::before { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #ffffff; box-shadow: 0 0 0 2px rgba(0,0,0,0.45); transition: background 0.2s ease; }
+      .pt-pin::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.7); animation: ptPulse 2.4s ease-out infinite; }
+      .pt-pin:hover::before { background: #34a58e; }
+      @keyframes ptPulse { from { transform: scale(1); opacity: 0.9; } to { transform: scale(3.2); opacity: 0; } }
+      #places .leaflet-popup-content-wrapper { background: #1f2224; color: #ffffff; border-radius: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.5); padding: 0; }
+      #places .leaflet-popup-tip { background: #1f2224; }
+      #places .leaflet-popup-content { margin: 0; width: 200px !important; }
+      #places .leaflet-popup-close-button { color: #ffffff !important; z-index: 2; text-shadow: 0 0 4px rgba(0,0,0,0.8); }
+      #places .pt-pop { display: block; cursor: pointer; border: 0; }
+      #places .pt-pop img { display: block; width: 200px; height: 140px; object-fit: cover; }
+      #places .pt-pop strong { display: block; padding: 0.6em 0.8em 0.1em; font-size: 0.8em; letter-spacing: 0.1em; font-weight: 400; color: #ffffff; transition: color 0.2s ease; }
+      #places .pt-pop span { display: block; padding: 0 0.8em 0.7em; font-size: 0.7em; font-style: italic; color: #a0a0a1; }
+      #places .pt-pop:hover strong { color: #34a58e; }
+
+
+      /* Hover con el color de acento del tema en toda la página */
+      #header nav > ul > li a { transition: color 0.2s ease, background-color 0.5s ease; }
+      #header nav > ul > li a:hover { color: #34a58e !important; }
+      #header nav > ul > li a .ico-nav { transition: fill 0.2s ease; }
+      #header nav > ul > li a:hover .ico-nav { fill: #34a58e; }
+      #header h1 a { transition: color 0.2s ease; }
+      #header h1 a strong { transition: color 0.2s ease; }
+      #header h1 a:hover, #header h1 a:hover strong { color: #34a58e !important; }
+      #header .nav-toggle:hover span { background: #34a58e; }
+      ul.icons li .icon { transition: color 0.2s ease; }
+      ul.icons li .icon:hover { color: #34a58e !important; }
+
       /* Íconos en SVG (reemplazan a Font Awesome) */
       .icon .ico { width: auto; height: 1em; fill: currentColor; vertical-align: -0.125em; }
       ul.icons li .icon .ico { height: 1.5em; vertical-align: middle; }
@@ -329,7 +414,14 @@
             <strong>© Ricasoli</strong> Tadeo Pedro </a>
         </h1>
         <nav>
+          <button type="button" class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
           <ul>
+            <li>
+              <a href="#places" class="icon">Map<svg class="ico ico-nav" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M512 48c0-8.3-4.3-16-11.3-20.4s-15.9-4.8-23.3-1.1L352.5 88.1 180 29.4c-13.7-4.7-28.7-3.8-41.9 2.3L13.8 90.3C5.4 94.2 0 102.7 0 112v352c0 8.2 4.2 15.9 11.1 20.3s15.6 4.9 23.1 1.4l127.3-59.9 170.7 56.9c13.7 4.6 28.5 3.7 41.6-2.5l124.4-58.5c8.4-4 13.8-12.4 13.8-21.7zM144 82.1v299l-96 45.2v-299zm48 303.3V84.3l128 43.5v300.3zM368 134l96-47.4v298.2L368 430z"/></svg></a>
+            </li>
+            <li>
+              <a href="#gear" class="icon">Gear<svg class="ico ico-nav" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M193.1 32c-18.7 0-36.2 9.4-46.6 24.9l-26 39.1H64c-35.3 0-64 28.7-64 64v256c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64h-56.5l-26-39.1C355.1 41.4 337.6 32 318.9 32zm-6.7 51.6c1.5-2.2 4-3.6 6.7-3.6h125.7c2.7 0 5.2 1.3 6.7 3.6l33.2 49.8c4.5 6.7 11.9 10.7 20 10.7H448c8.8 0 16 7.2 16 16v256c0 8.8-7.2 16-16 16L64 432c-8.8 0-16-7.2-16-16V160c0-8.8 7.2-16 16-16h69.3c8 0 15.5-4 20-10.7l33.2-49.8zM256 384a112 112 0 1 0 0-224 112 112 0 1 0 0 224m-64-112a64 64 0 1 1 128 0 64 64 0 1 1-128 0"/></svg></a>
+            </li>
             <li>
               <a href="#footer" class="icon">Contact<svg class="ico ico-nav" viewBox="0 0 576 512" aria-hidden="true" focusable="false"><path transform="matrix(1 0 0 -1 0 448)" d="M532 61.7998c15.2998 -30.7002 37.4004 -54.5 37.7998 -54.7998c6.2998 -6.7002 8 -16.5 4.40039 -25c-3.7002 -8.5 -12 -14 -21.2002 -14c-53.5996 0 -96.7002 20.2998 -125.2 38.7998c-19 -4.39941 -39 -6.7998 -59.7998 -6.7998
 c-86.2002 0 -159.9 40.4004 -191.3 97.7998c-9.7002 1.2002 -19.2002 2.7998 -28.4004 4.90039c-28.5 -18.6006 -71.7002 -38.7998 -125.2 -38.7998c-9.19922 0 -17.5996 5.5 -21.1992 14c-3.7002 8.5 -1.90039 18.2998 4.39941 25
@@ -456,6 +548,36 @@ c29.0996 -29.6006 77.2998 -49.7002 131.3 -49.7002c16.5 0 33 1.90039 49 5.59961l1
         </article>
       </div>
       </div>
+      <!-- Map -->
+      <section id="places" class="panel" data-nosnippet>
+        <div class="inner">
+          <h2>Places</h2>
+          <div id="places-map" role="region" aria-label="Mapa de lugares"></div>
+        </div>
+      </section>
+      <!-- Gear -->
+      <section id="gear" class="panel" data-nosnippet>
+        <div class="inner split">
+          <div>
+            <section>
+              <h2>Camera</h2>
+              <ul class="gear-list">
+                <li><strong><a href="https://www.nikon.com.ar/camaras/reflex/d5600" target="_blank" rel="noopener">Nikon D5600</a></strong><span>DX · 24.2 MP</span></li>
+              </ul>
+            </section>
+          </div>
+          <div>
+            <section>
+              <h2>Lenses</h2>
+              <ul class="gear-list">
+                <li><strong><a href="https://www.sigma-global.com/en/lenses/17_50_28" target="_blank" rel="noopener">Sigma 17–50 mm f/2.8 EX DC OS HSM</a></strong><span>Wide to normal · low light</span></li>
+                <li><strong><a href="https://www.nikon.com.ar/lentes/reflex/af-p-dx-nikkor-18-55mm-f35-56g-vr" target="_blank" rel="noopener">AF-P DX Nikkor 18–55 mm f/3.5–5.6G VR</a></strong><span>Kit lens · everyday</span></li>
+                <li><strong><a href="https://www.nikonusa.com/p/af-s-vr-zoom-nikkor-70-300mm-f45-56g-if-ed/2161/overview" target="_blank" rel="noopener">AF-S VR Zoom-Nikkor 70–300 mm f/4.5–5.6G IF-ED</a></strong><span>Telephoto · wildlife &amp; details</span></li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
       <!-- Footer -->
       <footer id="footer" class="panel" data-nosnippet>
         <div class="inner split">
