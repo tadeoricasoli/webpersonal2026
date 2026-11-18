@@ -31,11 +31,18 @@
 	if (browser.canUse('transition')) {
 
 		// Play initial animations on page load.
-		$window.on('load', function() {
+		// La animación de entrada arranca cuando terminó de cargar todo, o a los 1,5 s como máximo
+		// (en el celular con conexión lenta, la página no queda bloqueada esperando)
+		var introDone = false;
+		function startIntro() {
+			if (introDone) return;
+			introDone = true;
 			window.setTimeout(function() {
 				$body.removeClass('is-preload');
 			}, 100);
-		});
+		}
+		$window.on('load', startIntro);
+		window.setTimeout(startIntro, 1500);
 
 		// Prevent transitions/animations on resize.
 		var resizeTimeout;
@@ -57,6 +64,47 @@
 	// Scroll back to top.
 	$window.scrollTop(0);
 
+
+	// ===== Pantallas táctiles: si un toque no genera "click" (pasa en algunos celulares/tablets, sobre todo
+	// en el primer toque después de cargar), se dispara el click igual. Si el click real llega, no se duplica.
+	(function() {
+		if (!('ontouchstart' in window)) return;
+		var SEL = '.thumb > a.image, #header nav a, #header .nav-toggle, .panel > .closer, .pt-pop';
+		var start = null, pending = null, pendingEl = null, lastSynth = 0, synthEl = null;
+		document.addEventListener('touchstart', function(e) {
+			if (e.touches.length !== 1) { start = null; return; }
+			var el = e.target.closest && e.target.closest(SEL);
+			start = el ? { el: el, x: e.touches[0].clientX, y: e.touches[0].clientY, t: Date.now() } : null;
+		}, { passive: true, capture: true });
+		document.addEventListener('touchmove', function(e) {
+			if (start && Math.hypot(e.touches[0].clientX - start.x, e.touches[0].clientY - start.y) > 10) start = null;
+		}, { passive: true, capture: true });
+		document.addEventListener('touchcancel', function() { start = null; }, { passive: true, capture: true });
+		document.addEventListener('touchend', function() {
+			if (!start) return;
+			var s = start; start = null;
+			if (Date.now() - s.t > 700) return;
+			clearTimeout(pending);
+			pendingEl = s.el;
+			pending = setTimeout(function() {
+				pending = null;
+				var el = pendingEl; pendingEl = null;
+				if (!el || !document.contains(el)) return;
+				lastSynth = Date.now(); synthEl = el;
+				el.click();
+			}, 450);
+		}, { passive: true, capture: true });
+		document.addEventListener('click', function(e) {
+			if (pending && pendingEl && (pendingEl === e.target || pendingEl.contains(e.target))) {
+				// Llegó el click real: cancelar el de respaldo
+				clearTimeout(pending); pending = null; pendingEl = null; return;
+			}
+			if (e.isTrusted && synthEl && Date.now() - lastSynth < 800 && (synthEl === e.target || synthEl.contains(e.target))) {
+				// Click real que llegó tarde, después del de respaldo: ignorarlo para no abrir/cerrar dos veces
+				e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+			}
+		}, true);
+	})();
 
 	// Menú ☰ en celular
 	(function() {
@@ -304,7 +352,7 @@
 		// Empezar a descargar la foto ampliada apenas el dedo toca la miniatura (o el mouse pasa por encima)
 		$('.thumb > a.image').each(function(i) {
 			this.addEventListener('touchstart', function() { preload(i); }, { passive: true });
-			this.addEventListener('mouseenter', function() { preload(i); });
+			if (window.matchMedia('(hover: hover)').matches) this.addEventListener('mouseenter', function() { preload(i); });
 		});
 
 		// Red de seguridad: si al tocar una miniatura la foto no se abre (pasaba a veces en el primer toque
@@ -600,20 +648,44 @@
 			map.fitBounds(bounds, { padding: [40, 40] });
 			$(el).on('click', '.pt-pop', function(e) { e.preventDefault(); openPhoto(+this.getAttribute('data-i')); });
 		}
-		function load() {
-			if (map) { setTimeout(function() { map.invalidateSize(); }, 550); return; }
-			if (loading) return;
-			loading = true;
+		var libState = 0, libWaiters = []; // 0 = sin pedir, 1 = descargando, 2 = lista, -1 = error
+		function preconnect(href) {
+			var l = document.createElement('link'); l.rel = 'preconnect'; l.href = href; l.crossOrigin = '';
+			document.head.appendChild(l);
+		}
+		function loadLib(cb) {
+			if (cb) libWaiters.push(cb);
+			if (libState === 2) { var w = libWaiters; libWaiters = []; w.forEach(function(f) { f(true); }); return; }
+			if (libState === 1) return;
+			libState = 1;
+			preconnect('https://basemaps.cartocdn.com');
 			var css = document.createElement('link');
 			css.rel = 'stylesheet'; css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
 			document.head.appendChild(css);
 			var js = document.createElement('script');
 			js.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-			js.onload = function() { setTimeout(function() { build(); map.invalidateSize(); }, 550); };
-			js.onerror = function() { loading = false; el.innerHTML = '<div class="map-msg">No se pudo cargar el mapa. Probá de nuevo en un rato.</div>'; };
+			js.onload = function() { libState = 2; var w = libWaiters; libWaiters = []; w.forEach(function(f) { f(true); }); };
+			js.onerror = function() { libState = 0; js.remove(); var w = libWaiters; libWaiters = []; w.forEach(function(f) { f(false); }); };
 			document.head.appendChild(js);
 		}
-		$panel.on('---show', load);
+		function show() {
+			if (map) { map.invalidateSize(); setTimeout(function() { map.invalidateSize(); }, 550); return; }
+			el.innerHTML = '';
+			loadLib(function(ok) {
+				if (map) return;
+				if (!ok) { el.innerHTML = '<div class="map-msg">The map could not be loaded. Please try again in a moment.</div>'; return; }
+				build();
+				// Reajustar cuando termina la animación del panel
+				setTimeout(function() { map.invalidateSize(); }, 550);
+			});
+		}
+		$panel.on('---show', show);
+
+		// Adelantarse: empezar a descargar el mapa apenas hay intención de abrirlo
+		var $mapToggle = $('#header nav a').filter(function() { return /^\s*Map/i.test($(this).text()); });
+		$mapToggle.on('mouseenter focus', function() { loadLib(); });
+		if ($mapToggle[0]) $mapToggle[0].addEventListener('touchstart', function() { loadLib(); }, { passive: true });
+		$('#header .nav-toggle').on('click', function() { loadLib(); });
 	})();
 
 	// Desactivar clic en imágenes cuando está abierto el panel #footer (formulario de contacto)

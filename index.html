@@ -65,6 +65,7 @@
     <meta property="og:image:alt" content="Upside Down" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="dns-prefetch" href="https://unpkg.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;1,300&display=swap" />
@@ -395,20 +396,27 @@
         #main .thumb > h2 { left: 0.9em; bottom: 0.8em; }
       }
 
-      #main:hover .thumb {
-        filter: brightness(0.5);
-        transform: scale(1);
-        z-index: 0;
-        transition: filter 0.3s ease, transform 0.3s ease;
+      /* Efecto al pasar el mouse: solo en dispositivos con mouse (en celulares/tablets el "hover"
+         queda pegado y puede hacer que el primer toque no responda) */
+      @media (hover: hover) and (pointer: fine) {
+        #main:hover .thumb {
+          filter: brightness(0.5);
+          transform: scale(1);
+          z-index: 0;
+          transition: filter 0.3s ease, transform 0.3s ease;
+        }
+
+        #main .thumb:hover {
+          filter: brightness(1);
+          transform: scale(1.05);
+          z-index: 10;
+          box-shadow: 0 0 20px rgba(0,0,0,0.6);
+          transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+        }
       }
 
-      #main .thumb:hover {
-        filter: brightness(1);
-        transform: scale(1.05);
-        z-index: 10;
-        box-shadow: 0 0 20px rgba(0,0,0,0.6);
-        transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-      }
+      /* Pantallas táctiles: respuesta inmediata al toque (sin la demora del doble toque para zoom) */
+      html { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
     </style>
   </head>
   <body class="is-preload">
