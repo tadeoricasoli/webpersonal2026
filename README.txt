@@ -96,6 +96,7 @@ tadeoricasoli/
   - A spam keyword regex.
   - Messages with more than 2 links are rejected.
   - Bots get a fake "success" message, so they don't retry.
+- **hCaptcha ("I am not a robot")** through Web3Forms' zero-config integration (dark theme). Its script loads only when the Contact panel opens. hCaptcha is enabled in the Web3Forms dashboard, so it is also enforced server-side.
 - Result pop-ups use **SweetAlert2**, restyled to match the site.
 
 ### UI details
@@ -113,7 +114,7 @@ tadeoricasoli/
 | **Cloudflare DNS / SSL** | Domain, HTTPS | Free | *Always Use HTTPS* enabled. Keep the `google-site-verification` TXT record. |
 | **Cloudflare Web Analytics** | Visitor stats | Free | Cookie-less; enabled from the dashboard (no code in the repo). |
 | **Cloudinary** | Image hosting + on-the-fly transforms | Free | Cloud name `dtmlyikjn`. Uses `f_auto,q_auto`, `c_fill`, `c_limit`, `g_face`, `e_blur`, etc. |
-| **Web3Forms** | Contact form → email | Free | Access key in the form's hidden input. |
+| **Web3Forms** | Contact form → email, hCaptcha | Free (250 submissions/month) | Access key in the form's hidden input. hCaptcha enabled in the dashboard. |
 | **CARTO Basemaps** | Dark map tiles (`dark_all`) | Free (non-commercial, API key) | Key restricted by referer to `tadeoricasoli.com`. Attribution must stay visible. |
 | **OpenStreetMap** | Map data (via CARTO) | Free | Attribution required (already shown on the map). |
 | **unpkg / jsDelivr** | CDNs for Leaflet 1.9.4 and SweetAlert2 | Free | Leaflet is loaded lazily. |

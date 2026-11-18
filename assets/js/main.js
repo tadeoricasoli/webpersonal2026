@@ -548,6 +548,20 @@
 	}
 
 
+
+	// hCaptcha (Web3Forms): se carga recién al abrir Contact, para no frenar la carga del sitio
+	(function() {
+		var loaded = false;
+		$('#footer').on('---show', function() {
+			if (loaded) return;
+			loaded = true;
+			var sc = document.createElement('script');
+			sc.src = 'https://web3forms.com/client/script.js';
+			sc.async = true; sc.defer = true;
+			document.body.appendChild(sc);
+		});
+	})();
+
 	// Panel Map (Leaflet se carga recién la primera vez que se abre)
 	(function() {
 		// PROVISORIO: lugares de ejemplo con fotos de la galería. Reemplazar por las stories.

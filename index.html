@@ -227,6 +227,12 @@
       ul.icons li .icon { transition: color 0.2s ease; }
       ul.icons li .icon:hover { color: #34a58e !important; }
 
+
+      /* hCaptcha */
+      #contact-form .h-captcha { margin: 0 0 0.6em; min-height: 78px; }
+      #captcha-error { margin: -0.2em 0 1em; }
+      @media screen and (max-width: 360px) { #contact-form .h-captcha { transform: scale(0.88); transform-origin: left top; } }
+
       /* Íconos en SVG (reemplazan a Font Awesome) */
       .icon .ico { width: auto; height: 1em; fill: currentColor; vertical-align: -0.125em; }
       ul.icons li .icon .ico { height: 1.5em; vertical-align: middle; }
@@ -688,6 +694,8 @@ c0 22.0996 -17.6992 39.7002 -39.6992 39.7002c-21.6006 0 -39.2002 -17.7002 -39.20
                   <textarea name="message" id="mensaje" placeholder="Message" rows="6" required></textarea>
                 </div>
               </div>
+              <div class="h-captcha" data-captcha="true" data-theme="dark" data-lang="en"></div>
+              <div class="error-message" id="captcha-error" aria-live="polite"></div>
               <ul class="actions">
                 <li><input type="submit" value="Send" class="primary" /></li>
               </ul>
@@ -747,6 +755,14 @@ c0 22.0996 -17.6992 39.7002 -39.6992 39.7002c-21.6006 0 -39.2002 -17.7002 -39.20
         Swal.fire({ ...popup, icon: 'error', title: 'Oops', text: 'Please remove the links from your message.', confirmButtonText: 'OK' });
         return;
       }
+      // 3) Verificación "No soy un robot" (hCaptcha vía Web3Forms)
+      const cap = form.querySelector('textarea[name="h-captcha-response"], [name="h-captcha-response"]');
+      const capErr = document.getElementById('captcha-error');
+      if (!cap || !cap.value) {
+        capErr.textContent = cap ? 'Please confirm you are not a robot.' : 'Verification is still loading, please wait a second.';
+        return;
+      }
+      capErr.textContent = '';
       const btn = form.querySelector('input[type="submit"]');
       btn.disabled = true; btn.value = 'Sending...';
       try {
@@ -764,6 +780,7 @@ c0 22.0996 -17.6992 39.7002 -39.6992 39.7002c-21.6006 0 -39.2002 -17.7002 -39.20
         Swal.fire({ ...popup, icon: 'error', title: 'Oops', text: 'The message could not be sent. ' + detail, confirmButtonText: 'OK' });
       } finally {
         btn.disabled = false; btn.value = 'Send';
+        try { if (window.hcaptcha) window.hcaptcha.reset(); } catch (_) {}
       }
     });
     </script>
