@@ -616,7 +616,7 @@
 		// group = fotos muy cercanas: de lejos se muestran como un solo punto, al acercarse se separan.
 		var places = [
 			{ name: 'GLACIAR PERITO MORENO', place: 'Santa Cruz', lat: -50.496, lng: -73.137, photo: 0 },
-			{ name: 'SARMIENTO DE JUNÍN', place: 'Estadio Eva Perón, Junín', lat: -34.590, lng: -60.950, photo: 1 },
+			{ name: 'SARMIENTO DE JUNÍN', place: 'Estadio Eva Perón, Junín', lat: -34.5854, lng: -60.9293, photo: 1 },
 			{ name: 'CRYING LIGHTNING', place: 'Mitre y French, Campana', lat: -34.1712, lng: -58.9618, photo: 2, group: 'CAMPANA' },
 			{ name: 'MENDOZA', place: 'Mendoza', lat: -32.889, lng: -68.845, photo: 3 },
 			{ name: '116 VISA OPEN', place: 'Nordelta Golf Club, Tigre', lat: -34.4119, lng: -58.6426, photo: 4 },
@@ -624,10 +624,11 @@
 			{ name: 'PITU', place: 'Playa Luna Roja, Chapadmalal', lat: -38.105, lng: -57.613, photo: 6 },
 			{ name: 'UPSIDE DOWN', place: 'Villa Epecuén', lat: -37.1308, lng: -62.8075, photo: 7 },
 			{ name: 'YUNGAS', place: 'Jujuy', lat: -23.70, lng: -64.85, photo: 8 },
+			{ name: 'TC', place: 'Autódromo de Concepción del Uruguay', lat: -32.4551, lng: -58.3140, photo: 9 },
 			{ name: 'FIRE BIRDS', place: 'Campana', lat: -34.1687, lng: -58.9591, photo: 10, group: 'CAMPANA' },
 			{ name: 'RECORDING', place: 'Paso y Mitre, Campana', lat: -34.1662, lng: -58.9580, photo: 11, group: 'CAMPANA' },
 			{ name: 'JUJUY', place: 'Purmamarca, Jujuy', lat: -23.745, lng: -65.498, photo: 12 },
-			{ name: 'B&W', place: 'Estación de trenes, Campana', lat: -34.1630, lng: -58.9555, photo: 13, group: 'CAMPANA' },
+			{ name: 'B&W', place: 'Estación de trenes, Campana', lat: -34.1568, lng: -58.9585, photo: 13, group: 'CAMPANA' },
 			{ name: 'SUNSHINE', place: 'Playa de Reta', lat: -38.8955, lng: -60.3410, photo: 14 }
 		];
 		var CARTO_KEY = 'cb1_5azb_1_96d0d2b2a535a109a73f7879';
