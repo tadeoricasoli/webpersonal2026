@@ -612,13 +612,23 @@
 
 	// Panel Map (Leaflet se carga recién la primera vez que se abre)
 	(function() {
-		// PROVISORIO: lugares de ejemplo con fotos de la galería. Reemplazar por las stories.
+		// Lugares de la galería. photo = número de foto en la galería, empezando de 0.
+		// group = fotos muy cercanas: de lejos se muestran como un solo punto, al acercarse se separan.
 		var places = [
 			{ name: 'GLACIAR PERITO MORENO', place: 'Santa Cruz', lat: -50.496, lng: -73.137, photo: 0 },
+			{ name: 'SARMIENTO DE JUNÍN', place: 'Estadio Eva Perón, Junín', lat: -34.590, lng: -60.950, photo: 1 },
+			{ name: 'CRYING LIGHTNING', place: 'Mitre y French, Campana', lat: -34.1712, lng: -58.9618, photo: 2, group: 'CAMPANA' },
 			{ name: 'MENDOZA', place: 'Mendoza', lat: -32.889, lng: -68.845, photo: 3 },
+			{ name: '116 VISA OPEN', place: 'Nordelta Golf Club, Tigre', lat: -34.4119, lng: -58.6426, photo: 4 },
 			{ name: 'ENTRE RÍOS', place: 'Entre Ríos', lat: -31.732, lng: -60.529, photo: 5 },
+			{ name: 'PITU', place: 'Playa Luna Roja, Chapadmalal', lat: -38.105, lng: -57.613, photo: 6 },
+			{ name: 'UPSIDE DOWN', place: 'Villa Epecuén', lat: -37.1308, lng: -62.8075, photo: 7 },
 			{ name: 'YUNGAS', place: 'Jujuy', lat: -23.70, lng: -64.85, photo: 8 },
-			{ name: 'JUJUY', place: 'Purmamarca, Jujuy', lat: -23.745, lng: -65.498, photo: 12 }
+			{ name: 'FIRE BIRDS', place: 'Campana', lat: -34.1687, lng: -58.9591, photo: 10, group: 'CAMPANA' },
+			{ name: 'RECORDING', place: 'Paso y Mitre, Campana', lat: -34.1662, lng: -58.9580, photo: 11, group: 'CAMPANA' },
+			{ name: 'JUJUY', place: 'Purmamarca, Jujuy', lat: -23.745, lng: -65.498, photo: 12 },
+			{ name: 'B&W', place: 'Estación de trenes, Campana', lat: -34.1630, lng: -58.9555, photo: 13, group: 'CAMPANA' },
+			{ name: 'SUNSHINE', place: 'Playa de Reta', lat: -38.8955, lng: -60.3410, photo: 14 }
 		];
 		var CARTO_KEY = 'cb1_5azb_1_96d0d2b2a535a109a73f7879';
 		var $panel = $('#places'), el = document.getElementById('places-map'), map = null, loading = false;
@@ -632,6 +642,10 @@
 			$panel.trigger('---hide');
 			setTimeout(function() { $('.thumb').eq(i).find('a.image').trigger('click'); }, 550);
 		}
+		function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+		function popHtml(p) {
+			return '<a class="pt-pop" data-i="' + p.photo + '"><img src="' + thumbOf(p.photo) + '" alt="" loading="lazy" /><strong>' + esc(p.name) + '</strong><span>' + esc(p.place) + '</span></a>';
+		}
 		function build() {
 			map = L.map(el, { zoomControl: true, attributionControl: true, scrollWheelZoom: true, worldCopyJump: false, minZoom: 3 });
 			L.tileLayer('https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png?key=' + CARTO_KEY, {
@@ -639,13 +653,31 @@
 				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>'
 			}).addTo(map);
 			var icon = L.divIcon({ className: 'pt-pin', iconSize: [24, 24] });
-			var bounds = [];
+			var iconGroup = function(n) { return L.divIcon({ className: 'pt-pin pt-pin-group', html: '<b>' + n + '</b>', iconSize: [24, 24] }); };
+			var near = L.layerGroup(), far = L.layerGroup(), groups = {}, bounds = [];
 			places.forEach(function(p) {
-				var html = '<a class="pt-pop" data-i="' + p.photo + '"><img src="' + thumbOf(p.photo) + '" alt="" loading="lazy" /><strong>' + p.name + '</strong><span>' + p.place + '</span></a>';
-				L.marker([p.lat, p.lng], { icon: icon, title: p.name }).addTo(map).bindPopup(html, { closeButton: true, autoPanPadding: [20, 20] });
+				var m = L.marker([p.lat, p.lng], { icon: icon, title: p.name }).bindPopup(popHtml(p), { closeButton: true, autoPanPadding: [20, 20] });
+				if (p.group) { m.addTo(near); (groups[p.group] = groups[p.group] || []).push(p); }
+				else m.addTo(map);
 				bounds.push([p.lat, p.lng]);
 			});
+			// Un punto por grupo (de lejos): la tarjeta muestra todas sus fotos
+			Object.keys(groups).forEach(function(g) {
+				var ps = groups[g], lat = 0, lng = 0;
+				ps.forEach(function(p) { lat += p.lat; lng += p.lng; });
+				var html = '<div class="pt-group"><div class="pt-group-title">' + esc(g) + ' · ' + ps.length + ' photos</div><div class="pt-group-grid">' +
+					ps.map(function(p) { return '<a class="pt-pop pt-mini" data-i="' + p.photo + '"><img src="' + thumbOf(p.photo) + '" alt="" loading="lazy" /><strong>' + esc(p.name) + '</strong></a>'; }).join('') +
+					'</div></div>';
+				L.marker([lat / ps.length, lng / ps.length], { icon: iconGroup(ps.length), title: g }).addTo(far)
+					.bindPopup(html, { closeButton: true, autoPanPadding: [20, 20], className: 'pt-popup-group' });
+			});
+			function sync() {
+				var close = map.getZoom() >= 13;
+				if (close) { map.removeLayer(far); near.addTo(map); } else { map.removeLayer(near); far.addTo(map); }
+			}
+			map.on('zoomend', sync);
 			map.fitBounds(bounds, { padding: [40, 40] });
+			sync();
 			$(el).on('click', '.pt-pop', function(e) { e.preventDefault(); openPhoto(+this.getAttribute('data-i')); });
 		}
 		var libState = 0, libWaiters = []; // 0 = sin pedir, 1 = descargando, 2 = lista, -1 = error

@@ -82,7 +82,7 @@ tadeoricasoli/
 - Safety nets for slow or first-tap loads: a visible loader, closing is blocked while loading, an automatic retry and a stuck-load watchdog.
 
 ### Panels (bottom bar on desktop, ☰ menu on mobile)
-- **MAP**: an interactive dark map (Leaflet) with pulsing pins. Each pin opens a card with a photo, and tapping the card opens that photo in the lightbox. Leaflet is only loaded the first time the panel opens.
+- **MAP**: an interactive dark map (Leaflet) with a pulsing pin for each place where a gallery photo was taken. Nearby photos (e.g. Campana) are grouped into one numbered pin until you zoom in. Each pin opens a card with a photo, and tapping the card opens that photo in the lightbox. Leaflet is only loaded the first time the panel opens.
 - **GEAR**: the camera and lenses, linked to the official product pages.
 - **CONTACT**: profile photo, short bio, social icons and the contact form.
 - On mobile the nav collapses into an animated **☰ menu**.
@@ -171,7 +171,7 @@ In `assets/js/main.js`, edit the `places` array in the *Panel Map* section:
 ```js
 { name: 'JUJUY', place: 'Purmamarca, Jujuy', lat: -23.745, lng: -65.498, photo: 12 }
 ```
-`photo` is the index (starting at 0) of the gallery thumbnail shown in the card. The current places are **placeholders** and will be replaced by Instagram story photos.
+`photo` is the index (starting at 0) of the gallery thumbnail shown in the card. Add `group: 'NAME'` to photos taken very close to each other: zoomed out they show as a single numbered pin whose card lists all of them, and from zoom 13 they split into individual pins.
 
 ### Change the contact form recipient / sender name
 Change the hidden inputs `access_key`, `from_name` and `subject` in the contact form in `index.html`.
