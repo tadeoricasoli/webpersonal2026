@@ -99,6 +99,12 @@ tadeoricasoli/
 - **hCaptcha ("I am not a robot")** through Web3Forms' zero-config integration (dark theme). Its script loads only when the Contact panel opens. hCaptcha is enabled in the Web3Forms dashboard, so it is also enforced server-side.
 - Result pop-ups use **SweetAlert2**, restyled to match the site.
 
+### Touch devices
+- Hover effects on the gallery only apply on devices with a mouse (`@media (hover: hover) and (pointer: fine)`), so a sticky hover can't eat the first tap.
+- `touch-action: manipulation` removes the double-tap-zoom delay, so taps respond instantly.
+- Tap safety net: if a tap on a photo, the ☰ menu, a nav item, a panel closer or a map card doesn't produce a click, the click is fired automatically after 450 ms. A late real click is ignored, so nothing opens twice.
+- The intro animation starts when the page has loaded, or after 1.5 s at most, so slow connections don't leave the page unresponsive.
+
 ### UI details
 - Hover color across the whole site: the template's accent `#34a58e`.
 - Right-click is disabled on the page (a light deterrent against casual image saving).
@@ -204,7 +210,7 @@ Do **not** commit private secrets: API secrets, passwords, Cloudflare tokens or 
 - LQIP blurred placeholders.
 - **Lazy-loaded thumbnails:** only the visible thumbnails and the ones about to scroll into view (600 px ahead) are downloaded, using `IntersectionObserver`. The first four are preloaded for a fast first paint. Older browsers fall back to loading everything.
 - Thumbnails and neighboring photos are preloaded in the lightbox.
-- The map library (Leaflet) and its tiles load only when the Map panel is opened.
+- The map library (Leaflet) and its tiles load only when there is intent to open the Map panel (hovering MAP or opening the ☰ menu) or when it is opened, with no fixed wait.
 
 ---
 
