@@ -618,7 +618,7 @@
 			{ name: 'GLACIAR PERITO MORENO', place: 'Santa Cruz', lat: -50.496, lng: -73.137, photo: 0 },
 			{ name: 'SARMIENTO DE JUNÍN', place: 'Estadio Eva Perón, Junín', lat: -34.5854, lng: -60.9293, photo: 1 },
 			{ name: 'CRYING LIGHTNING', place: 'Mitre y French, Campana', lat: -34.1712, lng: -58.9618, photo: 2, group: 'CAMPANA' },
-			{ name: 'MENDOZA', place: 'Mendoza', lat: -32.889, lng: -68.845, photo: 3 },
+			{ name: 'MENDOZA', place: 'Cañón del Atuel, San Rafael', lat: -35.0067, lng: -68.6522, photo: 3 },
 			{ name: '116 VISA OPEN', place: 'Nordelta Golf Club, Tigre', lat: -34.4119, lng: -58.6426, photo: 4 },
 			{ name: 'ENTRE RÍOS', place: 'Entre Ríos', lat: -31.732, lng: -60.529, photo: 5 },
 			{ name: 'PITU', place: 'Playa Luna Roja, Chapadmalal', lat: -38.105, lng: -57.613, photo: 6 },

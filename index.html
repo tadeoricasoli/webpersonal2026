@@ -153,6 +153,10 @@
       #gear .gear-list strong a { color: inherit; border-bottom: 0; text-decoration: none; }
       #gear .gear-list strong a { transition: color 0.2s ease; }
       #gear .gear-list strong a:hover { color: #34a58e !important; }
+      #gear .gear-list li { display: flex; align-items: center; gap: 1em; }
+      #gear .gear-list li > div { min-width: 0; }
+      #gear .gear-img { flex: 0 0 64px; width: 64px; height: 64px; padding: 5px; box-sizing: border-box; background: #ffffff; border-radius: 6px; object-fit: contain; }
+      @media screen and (max-width: 736px) { #gear .gear-img { flex-basis: 56px; width: 56px; height: 56px; } }
       #gear .gear-list span { display: block; font-size: 0.8em; font-style: italic; color: #a0a0a1; margin-top: 0.15em; }
       @media screen and (max-width: 736px) {
         #header nav .ico-nav { float: right; margin-top: 1.25em; }
@@ -586,7 +590,7 @@ c29.0996 -29.6006 77.2998 -49.7002 131.3 -49.7002c16.5 0 33 1.90039 49 5.59961l1
             <section>
               <h2>Camera</h2>
               <ul class="gear-list">
-                <li><strong><a href="https://www.nikon.com.ar/camaras/reflex/d5600" target="_blank" rel="noopener">Nikon D5600</a></strong><span>DX · 24.2 MP</span></li>
+                <li><img class="gear-img" src="https://res.cloudinary.com/dtmlyikjn/image/upload/e_trim/c_pad,b_white,w_192,h_192/f_auto,q_auto:best/D5600_lqp9tr" alt="Nikon D5600" width="64" height="64" loading="lazy" /><div><strong><a href="https://www.nikon.com.ar/camaras/reflex/d5600" target="_blank" rel="noopener">Nikon D5600</a></strong><span>DX · 24.2 MP</span></div></li>
               </ul>
             </section>
           </div>
@@ -594,9 +598,9 @@ c29.0996 -29.6006 77.2998 -49.7002 131.3 -49.7002c16.5 0 33 1.90039 49 5.59961l1
             <section>
               <h2>Lenses</h2>
               <ul class="gear-list">
-                <li><strong><a href="https://www.sigma-global.com/en/lenses/17_50_28" target="_blank" rel="noopener">Sigma 17–50 mm f/2.8 EX DC OS HSM</a></strong><span>Wide to normal · low light</span></li>
-                <li><strong><a href="https://www.nikon.com.ar/lentes/reflex/af-p-dx-nikkor-18-55mm-f35-56g-vr" target="_blank" rel="noopener">AF-P DX Nikkor 18–55 mm f/3.5–5.6G VR</a></strong><span>Kit lens · everyday</span></li>
-                <li><strong><a href="https://www.nikonusa.com/p/af-s-vr-zoom-nikkor-70-300mm-f45-56g-if-ed/2161/overview" target="_blank" rel="noopener">AF-S VR Zoom-Nikkor 70–300 mm f/4.5–5.6G IF-ED</a></strong><span>Telephoto · wildlife &amp; details</span></li>
+                <li><img class="gear-img" src="https://res.cloudinary.com/dtmlyikjn/image/upload/e_trim/c_pad,b_white,w_192,h_192/f_auto,q_auto:best/17-50_bxdznb" alt="Sigma 17–50 mm" width="64" height="64" loading="lazy" /><div><strong><a href="https://www.sigma-global.com/en/lenses/17_50_28" target="_blank" rel="noopener">Sigma 17–50 mm f/2.8 EX DC OS HSM</a></strong><span>Wide to normal · low light</span></div></li>
+                <li><img class="gear-img" src="https://res.cloudinary.com/dtmlyikjn/image/upload/e_trim/c_pad,b_white,w_192,h_192/f_auto,q_auto:best/18-55_v1liti" alt="Nikkor 18–55 mm" width="64" height="64" loading="lazy" /><div><strong><a href="https://www.nikon.com.ar/lentes/reflex/af-p-dx-nikkor-18-55mm-f35-56g-vr" target="_blank" rel="noopener">AF-P DX Nikkor 18–55 mm f/3.5–5.6G VR</a></strong><span>Kit lens · everyday</span></div></li>
+                <li><img class="gear-img" src="https://res.cloudinary.com/dtmlyikjn/image/upload/e_trim/c_pad,b_white,w_192,h_192/f_auto,q_auto:best/70-300_waeoaz" alt="Nikkor 70–300 mm" width="64" height="64" loading="lazy" /><div><strong><a href="https://www.nikonusa.com/p/af-s-vr-zoom-nikkor-70-300mm-f45-56g-if-ed/2161/overview" target="_blank" rel="noopener">AF-S VR Zoom-Nikkor 70–300 mm f/4.5–5.6G IF-ED</a></strong><span>Telephoto · wildlife &amp; details</span></div></li>
               </ul>
             </section>
           </div>
